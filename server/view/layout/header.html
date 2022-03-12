@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-3 bg-body rounded">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/stage/home">乐高学院</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/stage/home">首页</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        竞赛
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="competitions/news.html">最新竞赛</a></li>
+                        <li><a class="dropdown-item" href="competitions/category.html">竞赛类别</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">公告展示</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">学术交流</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">联系我们</a>
+                </li>
+            </ul>
+
+            <form class="d-flex" role="search">
+                <a class="nav-link" href="/stage/myhome">个人中心</a>
+                    <figure class="figure" id="figure">
+                        <!--                                figure-img img-fluid rounded-->
+<!--                        头像的url设计成user/figure/{uid} 每次更新只要覆盖文件就行-->
+                        <img src="/resource/user/figure/3.jpg" class=""
+                             style="display:block;border-radius:50%;width: 40px;background: palevioletred"
+                             alt="...">
+                    </figure>
+                <a class="nav-link" href="/stage/myhome" id="navUname"></a>
+                <a class="nav-link" href="/stage/login" id="loginBtn">登录</a>
+                <a class="btn btn-outline-danger" href="/stage/register" id="registerBtn">注册</a>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    const uname = $.cookie('uname');
+    $('#navUname').text(uname);
+    if (uname){
+        $('#navUname').addClass('d-inline')
+        $('#figure').addClass('d-inline')
+        $('#loginBtn').addClass('d-none')
+        $('#registerBtn').addClass('d-none')
+    }else {
+        $('#figure').addClass('d-none')
+        $('#navUname').addClass('d-none')
+        $('#loginBtn').addClass('d-inline')
+        $('#registerBtn').addClass('d-inline')
+    }
+</script>

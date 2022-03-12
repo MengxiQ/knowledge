@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人主页</title>
+    {include file="/layout/head"}
+</head>
+<body>
+{include file="/layout/header"}
+<div class="detail">
+    <div class="container">
+        <div class="d-flex align-items-start">
+            <div class="nav flex-column nav-pills me-3 w-25" id="v-pills-tab" role="tablist"
+                 aria-orientation="vertical">
+                <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
+                        data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
+                        aria-selected="true" style="background: none"><h4 style="color: #1a1e21"></h4>
+                </button>
+                <div class="w-100 text-center">
+                    <figure class="figure">
+                        <!--                                figure-img img-fluid rounded-->
+                        <img src="/static/image/myHome/girl.svg" class=""
+                             style="display:block;height: 250px;width: 250px;"
+                             alt="随便一个插画">
+                        <figcaption class="figure-caption">元气满满每一天。</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="tab-content w-100" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                     aria-labelledby="v-pills-home-tab">
+                    <div class="w-100">
+                        <div class="p-4" >
+                            <div class="row d-flex align-items-center justify-content-center shadow p-3 mb-5 bg-body rounded">
+
+                                <div class="col-5 p-3">
+                                    <figure class="figure d-flex flex-column align-items-center justify-content-center">
+                                        <!--                                figure-img img-fluid rounded-->
+                                        <img src="{$user.avatar}" class=""
+                                             style="display:block;border-radius:50%;height: 110px;width: 110px;background: palevioletred"
+                                             alt="...">
+                                        <figcaption class="figure-caption" style="text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical; -webkit-line-clamp:2;overflow: hidden;" title="{$user.motto}">{$user.motto}
+                                        </figcaption>
+                                    </figure>
+                                </div>
+                                <div class="col-7">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"
+                                            style="font-size: .875em;color: #6c757d;background: none;border: none">
+                                            用户名：{$user.nickname}
+                                        </li>
+                                        <li class="list-group-item"
+                                            style="font-size: .875em;color: #6c757d;background: none;border: none">
+                                            邮箱：{$user.email}
+                                        </li>
+                                        <li class="list-group-item"
+                                            style="font-size: .875em;color: #6c757d;background: none;border: none">
+                                            电话：{$user.phone}
+                                        </li>
+                                        <li class="list-group-item"
+                                            style="font-size: .875em;color: #6c757d;background: none;border: none">
+                                            地址：{$user.address}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="row shadow-sm p-3 mb-5 bg-body rounded" >
+                                <p class="row h4 mb-3">我的竞赛</p>
+                                <table class="table table-borderless">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">赛事名称</th>
+                                        <th scope="col">报名时间</th>
+                                        <th scope="col">比赛状态</th>
+                                        <th scope="col">审核状态</th>
+                                        <th scope="col">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {foreach $attend as $v}
+                                    <tr>
+                                        <th><span class="rounded-circle" style="display:inline-block;height: 10px;width: 10px;background: pink"></span></th>
+                                        <td>{$v.competition_title}</td>
+                                        <td>{$v.date}</td>
+                                        <td><span class="badge bg-success">{$v.progress}</span></td>
+                                        <td><span class="badge bg-success">{$v.status}</span></td>
+                                        <td class="d-flex">
+<!--                                            <a href="../pages/competitions/detail.html"-->
+<!--                                               class="btn btn-light btn-sm">放弃</a>-->
+                                            <a href="../pages/competitions/detail.html" >竞赛详情</a>
+                                        </td>
+                                    </tr>
+                                    {/foreach}
+<!--                                    <tr>-->
+<!--                                        <th scope="row">2</th>-->
+<!--                                        <td>很长很长的项目名称</td>-->
+<!--                                        <td>2022/04/30</td>-->
+<!--                                        <td>2022/04/30</td>-->
+<!--                                        <td>2022/04/30</td>-->
+<!--                                        <td><span class="badge bg-primary">报名中</span></td>-->
+<!--                                        <td class="d-flex">-->
+<!--                                            <a href="../pages/competitions/detail.html"-->
+<!--                                               class="btn btn-light btn-sm">放弃</a>-->
+<!--                                            <a href="../pages/competitions/detail.html" class="btn btn-danger btn-sm">查看详情</a>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <th scope="row">2</th>-->
+<!--                                        <td>很长很长的项目名称</td>-->
+<!--                                        <td>2022/04/30</td>-->
+<!--                                        <td>2022/04/30</td>-->
+<!--                                        <td>2022/04/30</td>-->
+<!--                                        <td><span class="badge bg-secondary">已结束</span></td>-->
+<!--                                        <td class="d-flex">-->
+<!--                                            <a href="../pages/competitions/detail.html"-->
+<!--                                               class="btn btn-light btn-sm">放弃</a>-->
+<!--                                            <a href="../pages/competitions/detail.html" class="btn btn-danger btn-sm">查看详情</a>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+                                    </tbody>
+                                </table>
+<!--                                <nav aria-label="Page navigation example">-->
+<!--                                    <ul class="pagination">-->
+<!--                                        <li class="page-item">-->
+<!--                                            <a class="page-link" href="#" aria-label="Previous">-->
+<!--                                                <span aria-hidden="true">&laquo;</span>-->
+<!--                                            </a>-->
+<!--                                        </li>-->
+<!--                                        <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--                                        <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--                                        <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--                                        <li class="page-item">-->
+<!--                                            <a class="page-link" href="#" aria-label="Next">-->
+<!--                                                <span aria-hidden="true">&raquo;</span>-->
+<!--                                            </a>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </nav>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

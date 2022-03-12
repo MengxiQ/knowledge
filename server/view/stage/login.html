@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    {include file="/layout/head"}
+</head>
+<body style="background: linear-gradient(-125deg, #57bdbf, #2f9de2);">
+<div class="container" >
+    <div class="row " style="height: 100vh">
+        <div class="col d-flex align-items-center">
+            <img src="/static/image/login/火箭发射.svg" class="img-fluid" alt="...">
+        </div>
+        <div class="col d-flex align-items-center">
+            <div class="card" style="width: 30rem;">
+                <div class="card-body">
+                    <form id="LoginForm">
+                        <div class="h4 w-100 mb-5 text-center">用户账号登录</div>
+                        <div class="form-floating mb-5">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+                            <label for="email">电子邮箱</label>
+                        </div>
+                        <div class="form-floating mb-4">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                            <label for="password">密码</label>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="remember">
+                            <label class="form-check-label" for="remember">记住我</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" id="login">登录</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="position-fixed top-0 start-50 translate-middle-x" style="z-index: 11">
+    <div id="liveToast" class="toast top-0 start-50" role="alert" aria-live="assertive"
+         aria-atomic="true">
+        <div class="toast-header">
+            <div style="height: 20px;width: 20px;background: seagreen" class="rounded me-2"></div>
+            <strong class="me-auto">提示</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" id="toast-body">
+
+        </div>
+    </div>
+</div>
+
+<script>
+    const cookie = $.cookie('uid');
+    if(cookie){
+        window.location.href = "/stage/myhome"
+    }
+    $('#login').click(function (e){
+        e.preventDefault()
+        const data = {};
+        const formData = $('#LoginForm').serializeArray();
+        $.each(formData, function (index, item) {
+            data[item.name] = item.value
+        });
+        axios({
+            method: 'post',
+            url: '/validate/login',
+            data
+        }).then(res => {
+            console.log(res)
+            document.getElementById('toast-body').innerText = res.data.message
+            var toastLiveExample = document.getElementById('liveToast')
+            var toast = new bootstrap.Toast(toastLiveExample)
+            toast.show()
+            setTimeout(()=>{window.location.href = "/stage/myhome"},1500)
+        }).catch(e => {
+            console.log(e)
+        })
+    })
+</script>
+</body>
+</html>
