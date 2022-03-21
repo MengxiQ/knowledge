@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>最新竞赛</title>
+    {include file="/layout/head"}
+    <link rel="stylesheet" href="/static/css/news.css">
+</head>
+<body>
+{include file="/layout/header"}
+<div class="news">
+    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {volist name="banner" id="v" key="k"}
+            <div class="carousel-item {if $k == 1}active{/if}" data-bs-interval="5000">
+                <img src="{$v->img}" class="d-block w-100 carousel-img" alt="image" style=" height: 350px;background: palevioletred">
+                <div class="carousel-caption d-none d-md-block">
+                    <h4>{$v->title}</h4>
+                    <p>{$v->sub}</p>
+                </div>
+            </div>
+            {/volist}
+        </div>
+    </div>
+    <div class="container">
+        <ul class="nav shadow p-3 mb-5 bg-body">
+            <li class="nav-item">
+                <!--            btn-outline-success 选中的就去掉outline-->
+                <a class="nav-link active" aria-current="page" href="/stage/competitions_news?filter=all">
+                    <div class="btn {$filter == 'all' ? 'btn-danger' : 'btn-outline-danger'}">全部({$total})</div>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/stage/competitions_news?filter=preview">
+                    <div class="btn  {$filter == 'register' ? 'btn-info' : 'btn-outline-info'}">预告({$preview_total})</div>
+                </a>
+            </li>            <li class="nav-item">
+                <a class="nav-link" href="/stage/competitions_news?filter=register">
+                    <div class="btn  {$filter == 'register' ? 'btn-success' : 'btn-outline-success'}">报名中({$register_total})</div>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/stage/competitions_news?filter=begin">
+                    <div class="btn  {$filter == 'begin' ? 'btn-primary' : 'btn-outline-primary'}">进行中({$begin_total})</div>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/stage/competitions_news?filter=end">
+                    <div class="btn  {$filter == 'end' ? 'btn-dark' : 'btn-outline-dark'}">已经结束({$end_total})</div>
+                </a>
+            </li>
+        </ul>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {volist name="competitions" id="v" key="k"}
+            <div class="col">
+                <div class="card mb-3">
+                    <a href="/stage/detail?id={$v['id']}"><img src="{$v['cover']}" class="card-img-top card-img" alt="..." ></a>
+                    <div class="card-body">
+                        <h5 class="card-title my-card-title">{$v['title']}</h5>
+<!--                        <span class="badge bg-success">火热报名中</span>-->
+                        {if $v['status'] == 'register'}
+                        <span class="badge bg-success">火热报名中</span>
+                        {elseif $v['status'] == 'begin'/}
+                        <span class="badge bg-primary ">比赛进行中</span>
+                        {elseif $v['status'] == 'end'/}
+                        <span class="badge bg-danger">比赛已结束</span>
+                        {elseif $v['status'] == 'preview'/}
+                        <span class="badge bg-info">赛事预告</span>
+                        {/if}
+                        <p class="card-text my-card-text">{$v['desc']}</p>
+                        <p class="card-text"><small class="text-muted">比赛开始时间：{$v['start_date']}</small></p>
+                    </div>
+                </div>
+            </div>
+            {/volist}
+            <!--            <div class="col">-->
+<!--                <div class="card mb-3">-->
+<!--                    <img src="..." class="card-img-top card-img" alt="...">-->
+<!--                    <div class="card-body">-->
+<!--                        <h5 class="card-title">Card title<span class="badge bg-primary">进行中</span></h5>-->
+<!--                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to-->
+<!--                            additional content. This content is a little bit longer.</p>-->
+<!--                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col">-->
+<!--                <div class="card mb-3">-->
+<!--                    <img src="..." class="card-img-top card-img" alt="...">-->
+<!--                    <div class="card-body">-->
+<!--                        <h5 class="card-title">Card title<span class="badge bg-light" style="color: #676e73">已结束</span></h5>-->
+<!--                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to-->
+<!--                            additional content. This content is a little bit longer.</p>-->
+<!--                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col">-->
+<!--                <div class="card mb-3">-->
+<!--                    <img src="..." class="card-img-top card-img" alt="...">-->
+<!--                    <div class="card-body">-->
+<!--                        <h5 class="card-title">Card title</h5>-->
+<!--                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to-->
+<!--                            additional content. This content is a little bit longer.</p>-->
+<!--                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col">-->
+<!--                <div class="card mb-3">-->
+
+<!--                    <img src="..." class="card-img-top card-img" alt="...">-->
+<!--                    <div class="card-body">-->
+<!--                        <h5 class="card-title">Card title</h5>-->
+<!--                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to-->
+<!--                            additional content. This content is a little bit longer.</p>-->
+<!--                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col">-->
+<!--                <div class="card mb-3">-->
+<!--                    <img src="..." class="card-img-top card-img" alt="...">-->
+<!--                    <div class="card-body">-->
+<!--                        <h5 class="card-title">Card title</h5>-->
+<!--                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to-->
+<!--                            additional content. This content is a little bit longer.</p>-->
+<!--                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col">-->
+<!--                <div class="card mb-3">-->
+<!--                    <img src="..." class="card-img-top card-img" alt="...">-->
+<!--                    <div class="card-body">-->
+<!--                        <h5 class="card-title">Card title</h5>-->
+<!--                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to-->
+<!--                            additional content. This content is a little bit longer.</p>-->
+<!--                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+    </div>
+</div>
+</body>
+</html>

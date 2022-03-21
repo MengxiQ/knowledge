@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    {include file="/layout/head"}
+</head>
+<body>
+{include file="/layout/header"}
+<div class="container" style="">
+    <div class=" " style="height: 100vh;">
+        <form id="form" class="row" style="width: 450px;height: 350px;margin: auto;margin-top: 100px">
+            <div class="clo-12" style="">
+                <p class="display-6">用户注册</p>
+            </div>
+            <div class="col-12">
+                <input type="text" class="form-control form-control-lg" name="email" id="email" placeholder="电子邮箱">
+            </div>
+            <div class="col-12">
+                <input type="password" class="form-control form-control-lg" name="password" id="password" placeholder="输入密码">
+            </div>
+            <div class="col-12">
+                <input type="password" class="form-control form-control-lg" id="check" placeholder="确认密码">
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-lg w-100" id="submit">注册</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="position-fixed top-0 start-50 translate-middle-x" style="z-index: 11">
+    <div id="liveToast" class="toast top-0 start-50" role="alert" aria-live="assertive"
+         aria-atomic="true">
+        <div class="toast-header">
+            <div style="height: 20px;width: 20px;background: seagreen" class="rounded me-2"></div>
+            <strong class="me-auto">提示</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" id="toast-body">
+
+        </div>
+    </div>
+</div>
+<script>
+    $('#submit').click(function (e){
+        e.preventDefault()
+
+        if($('#password').val() !== $('#check').val()){
+            document.getElementById('toast-body').innerText = '密码不一致'
+            var toastLiveExample = document.getElementById('liveToast')
+            var toast = new bootstrap.Toast(toastLiveExample)
+            toast.show()
+
+            return;
+        }
+
+        const data = {};
+        const formData = $('#form').serializeArray();
+        $.each(formData, function (index, item) {
+            data[item.name] = item.value
+        });
+        data.phone = ''
+        data.name = ''
+        data.address = ''
+        data.motto = ''
+        data.avatar = '#'
+        data.nickname = 'user_' + new Date().toLocaleString().replaceAll('/','_').replaceAll(' ','_').replaceAll(':','_')
+        axios({
+            method: 'post',
+            url: '/users',
+            data
+        }).then(res => {
+            console.log(res)
+            document.getElementById('toast-body').innerText = '注册成功'
+            var toastLiveExample = document.getElementById('liveToast')
+            var toast = new bootstrap.Toast(toastLiveExample)
+            toast.show()
+            setTimeout(()=>{window.location.href = "/stage/myhome"},500)
+        }).catch(e => {
+            console.log(e)
+        })
+    })
+</script>
+</body>
+</html>

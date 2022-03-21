@@ -5,6 +5,7 @@ namespace app\controller;
 
 use app\model\UsersModel;
 use think\Exception;
+use think\exception\ErrorException;
 use think\Request;
 
 class Users
@@ -71,5 +72,12 @@ class Users
         return json(['code' => 1, 'message' => '删除成功']);
     }
 
-
+    public function upload_avatar(){
+        // 获取表单上传文件 例如上传了001.jpg
+        $file = request()->file('avatar');
+        // 上传到本地服务器
+        $savename = \think\facade\Filesystem::putFile( 'users/avatar', $file);
+//        $savename = \think\facade\Filesystem::putFileAs( 'users/avatar', $file, $uid );// 保存文件名为用户id,需要手动添加文件后缀和解决浏览器缓存的问题
+        return json('/storage/' . $savename);
+    }
 }

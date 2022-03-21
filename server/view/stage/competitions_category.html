@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>category</title>
+    {include file="/layout/head"}
+    <link rel="stylesheet" href="/static/css/category.css">
+</head>
+<body>
+{include file="/layout/header"}
+<div class="category">
+    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {volist name="banner" id="v" key="k"}
+            <div class="carousel-item {if $k == 1}active{/if}" data-bs-interval="5000">
+                <img src="{$v->img}" class="d-block w-100 carousel-img" alt="image" style=" height: 350px;background: palevioletred">
+                <div class="carousel-caption d-none d-md-block">
+                    <h4>{$v->title}</h4>
+                    <p>{$v->sub}</p>
+                </div>
+            </div>
+            {/volist}
+        </div>
+    <div class="container shadow-sm p-3 mb-5 bg-body rounded">
+        <div class=" shadow-sm p-3 mb-5 bg-body rounded">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link  {if $current == 'all'}active{/if}" href="?type=all">全部</a>
+                </li>
+                {volist name="types" id="v" key="k"}
+                <li class="nav-item">
+                    <a class="nav-link {if $v->id == $current}active{/if}" href="?type={$v->id}">{$v->name}</a>
+                </li>
+                {/volist}
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link active" aria-current="page" href="#">类别1</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">类别2</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">类别3</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">类别4</a>-->
+                </li>
+            </ul>
+            <p class="mt-4">{$currentTyps->desc}</p>
+        </div>
+
+        <table class="table table-bordered">
+            <tbody>
+            <!--            <tr class="shadow-lg p-3 mb-5 bg-body rounded">-->
+            {volist name="competitions" id="v" key="k"}
+            <tr class="">
+
+                <td colspan="1" class="td-content-col">
+                    <a href="/stage/detail?id={$v->id}" class="h5 text-decoration-none" style="color: #1a1e21"><strong>{$v->title}</strong></a>
+                    {if $v['status'] == 'register'}
+                    <span class="badge bg-success">火热报名中</span>
+                    {elseif $v['status'] == 'begin'/}
+                    <span class="badge bg-primary ">比赛进行中</span>
+                    {elseif $v['status'] == 'end'/}
+                    <span class="badge bg-danger">比赛已结束</span>
+                    {elseif $v['status'] == 'preview'/}
+                    <span class="badge bg-info">赛事预告</span>
+                    {/if}
+                    <p>
+                        {$v->desc}
+                    </p>
+                    <small class="text-muted">举办方：
+                        {php}
+                        $arr = json_decode($v->organizer);
+                        $arrlength = count($arr);
+                        for($x=0;$x<$arrlength;$x++)
+                        {
+                        echo '<span style="display: inline-block;margin-right: 10px;">'.$arr[$x].'</span>';
+                        }
+                        {/php}
+                    </small>
+                </td>
+                <td class="align-middle" style="width: 350px;text-align: center">
+                    <span style="display:inline-block;width: 110px;height: 48px;background:#f0f0f0;border-radius: 2px;">
+                        <div>报名人数</div>
+                        <div><strong>{$v->statistics}</strong></div>
+                    </span>
+                    <div>截止日期：{$v->register_end_date}</div>
+                </td>
+                <td class="align-middle" style="width: 200px;text-align: center">
+                    {if $v['status'] == 'register'}
+                    <a class="btn btn-danger" style="border-radius: 0" href="/stage/attend/{$v->id}" >立即报名</a>
+                    {else/}
+                    <a class="btn btn-primary" style="border-radius: 0" href="/stage/detail?id={$v->id}" >查看详情</a>
+                    {/if}
+
+
+            </tr>
+            {/volist}
+<!--            <tr class="">-->
+
+<!--                <td colspan="1" class="td-content-col">-->
+<!--                    <p class="h5"><strong>很长很长的活动标题</strong></p>-->
+<!--                    <span class="badge bg-danger">进行中</span>-->
+<!--                    <p>-->
+<!--                        很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述-->
+<!--                        很长很长很长的活动活动描述。-->
+<!--                    </p>-->
+<!--                    <small class="text-muted">举办方：乐高学院</small>-->
+<!--                </td>-->
+<!--                <td class="align-middle" style="width: 350px;text-align: center">-->
+<!--                    <div>报名人数：9999</div>-->
+<!--                    <div>截止日期：2022/02/02</div>-->
+<!--                </td>-->
+<!--                <td class="align-middle" style="width: 200px;text-align: center">-->
+<!--                    <button class="btn btn-danger" style="border-radius: 0">立即报名</button>-->
+<!--                </td>-->
+
+<!--            </tr>-->
+<!--            <tr class="">-->
+
+<!--                <td colspan="1" class="td-content-col">-->
+<!--                    <p class="h5"><strong>很长很长的活动标题</strong></p>-->
+<!--                    <span class="badge bg-danger">进行中</span>-->
+<!--                    <p>-->
+<!--                        很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述-->
+<!--                        很长很长很长的活动活动描述。-->
+<!--                    </p>-->
+<!--                    <small class="text-muted">举办方：乐高学院</small>-->
+<!--                </td>-->
+<!--                <td class="align-middle" style="width: 350px;text-align: center">-->
+<!--                    <div>报名人数：9999</div>-->
+<!--                    <div>截止日期：2022/02/02</div>-->
+<!--                </td>-->
+<!--                <td class="align-middle" style="width: 200px;text-align: center">-->
+<!--                    <button class="btn btn-danger" style="border-radius: 0">立即报名</button>-->
+<!--                </td>-->
+
+<!--            </tr>-->
+<!--            <tr class="">-->
+
+<!--                <td colspan="1" class="td-content-col">-->
+<!--                    <p class="h5"><strong>很长很长的活动标题</strong></p>-->
+<!--                    <span class="badge bg-danger">进行中</span>-->
+<!--                    <p>-->
+<!--                        很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述-->
+<!--                        很长很长很长的活动活动描述。-->
+<!--                    </p>-->
+<!--                    <small class="text-muted">举办方：乐高学院</small>-->
+<!--                </td>-->
+<!--                <td class="align-middle" style="width: 350px;text-align: center">-->
+<!--                    <div>报名人数：9999</div>-->
+<!--                    <div>截止日期：2022/02/02</div>-->
+<!--                </td>-->
+<!--                <td class="align-middle" style="width: 200px;text-align: center">-->
+<!--                    <button class="btn btn-danger" style="border-radius: 0">立即报名</button>-->
+<!--                </td>-->
+
+<!--            </tr>-->
+<!--            <tr class="">-->
+
+<!--                <td colspan="1" class="td-content-col">-->
+<!--                    <p class="h5"><strong>很长很长的活动标题</strong></p>-->
+<!--                    <span class="badge bg-danger">进行中</span>-->
+<!--                    <p>-->
+<!--                        很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述-->
+<!--                        很长很长很长的活动活动描述。-->
+<!--                    </p>-->
+<!--                    <small class="text-muted">举办方：乐高学院</small>-->
+<!--                </td>-->
+<!--                <td class="align-middle" style="width: 350px;text-align: center">-->
+<!--                    <div>报名人数：9999</div>-->
+<!--                    <div>截止日期：2022/02/02</div>-->
+<!--                </td>-->
+<!--                <td class="align-middle" style="width: 200px;text-align: center">-->
+<!--                    <button class="btn btn-danger" style="border-radius: 0">立即报名</button>-->
+<!--                </td>-->
+
+<!--            </tr>-->
+<!--            <tr class="">-->
+
+<!--                <td colspan="1" class="td-content-col">-->
+<!--                    <p class="h5"><strong>很长很长的活动标题</strong></p>-->
+<!--                    <span class="badge bg-danger">进行中</span>-->
+<!--                    <p>-->
+<!--                        很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述-->
+<!--                        很长很长很长的活动活动描述。-->
+<!--                    </p>-->
+<!--                    <small class="text-muted">举办方：乐高学院</small>-->
+<!--                </td>-->
+<!--                <td class="align-middle" style="width: 350px;text-align: center">-->
+<!--                    <div>报名人数：9999</div>-->
+<!--                    <div>截止日期：2022/02/02</div>-->
+<!--                </td>-->
+<!--                <td class="align-middle" style="width: 200px;text-align: center">-->
+<!--                    <button class="btn btn-danger" style="border-radius: 0">立即报名</button>-->
+<!--                </td>-->
+
+<!--            </tr>-->
+            </tbody>
+        </table>
+<!--        <ul class="pagination">-->
+<!--            <li class="page-item" style="line-height: 40px">-->
+<!--                <span class="text-muted">总数：99 条</span>-->
+<!--            </li>-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="#" aria-label="Previous">-->
+<!--                    <span aria-hidden="true">&laquo;</span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--            <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--            <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--            <li class="page-item">-->
+<!--                <a class="page-link" href="#" aria-label="Next">-->
+<!--                    <span aria-hidden="true">&raquo;</span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--        </ul>-->
+    </div>
+</div>
+</body>
+</html>

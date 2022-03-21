@@ -90,33 +90,6 @@
     </div>
 </div>
 <script>
-    var format = function(time, format){
-        var t = new Date(time);
-        var tf = function(i){return (i < 10 ? '0' : '') + i};
-        return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a){
-            switch(a){
-                case 'yyyy':
-                    return tf(t.getFullYear());
-                    break;
-                case 'MM':
-                    return tf(t.getMonth() + 1);
-                    break;
-                case 'mm':
-                    return tf(t.getMinutes());
-                    break;
-                case 'dd':
-                    return tf(t.getDate());
-                    break;
-                case 'HH':
-                    return tf(t.getHours());
-                    break;
-                case 'ss':
-                    return tf(t.getSeconds());
-                    break;
-            }
-        })
-    }
-
     const cookie_uname = $.cookie('uname');
     $('#nickname').attr('value',cookie_uname);
 
@@ -137,7 +110,7 @@
                 data: {
                     competition: Number($('#competition').attr('cid')),
                     // competition_title: "很长很长的标题",
-                    date: format(new Date(), 'yyyy-MM-dd hh:mm:ss'),
+                    date:new Date().toLocaleString(),
                     form: JSON.stringify(data),
                     // status: "commit",//前端不要传这个字段
                     // uname: $('#nickname').val(),

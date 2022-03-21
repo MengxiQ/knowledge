@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>乐高赛事</title>
+    <link rel="stylesheet" href="/static/css/home.css">
+    {include file="/layout/head"}
+</head>
+<body>
+{include file="/layout/header"}
+<div class="home">
+    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            {volist name="banner" id="v" key="k"}
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="{$k-1}" class="{if $k == 1}active{/if}" aria-current="true" aria-label="Slide {$k - 1}"></button>
+            {/volist}
+        </div>
+        <div class="carousel-inner">
+            {volist name="banner" id="v" key="k"}
+            <div class="carousel-item {if $k == 1}active{/if}" data-bs-interval="5000">
+                <img src="{$v->img}" class="d-block w-100 carousel-img" alt="image">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>{$v->title}</h5>
+                    <p>{$v->sub}</p>
+                </div>
+            </div>
+            {/volist}
+<!--            <div class="carousel-item active" data-bs-interval="5000">-->
+<!--                <img src="..." class="d-block w-100 carousel-img" alt="...">-->
+<!--                <div class="carousel-caption d-none d-md-block">-->
+<!--                    <h5>Second slide label</h5>-->
+<!--                    <p>Some representative placeholder content for the second slide.</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="carousel-item" data-bs-interval="5000">-->
+<!--                <img src="..." class="d-block w-100 carousel-img" alt="...">-->
+<!--                <div class="carousel-caption d-none d-md-block">-->
+<!--                    <h5>Third slide label</h5>-->
+<!--                    <p>Some representative placeholder content for the third slide.</p>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <div class="container">
+        <p class="h2 d-block mt-5 mb-5">赛事推荐</p>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {volist name="recommend" id="v" key="k"}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <a href="/stage/detail?id={$v['id']}"><img src="{$v['cover'] ? $v['cover'] :''}" class="card-img-top card-img img-fluid rounded-0" alt="..."></a>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold my-card-title">{$v['title']}</h5>
+                        <p class="card-text my-card-text" >{$v['desc']}</p>
+                    </div>
+                </div>
+            </div>
+            {/volist}
+<!--            <div class="col">-->
+<!--                <div class="card">-->
+<!--                    <img src="..." class="card-img-top card-img" alt="...">-->
+<!--                    <div class="card-body">-->
+<!--                        <h5 class="card-title">Card title</h5>-->
+<!--                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col">-->
+<!--                <div class="card">-->
+<!--                    <img src="..." class="card-img-top card-img" alt="...">-->
+<!--                    <div class="card-body">-->
+<!--                        <h5 class="card-title">Card title</h5>-->
+<!--                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col">-->
+<!--                <div class="card">-->
+<!--                    <img src="..." class="card-img-top card-img" alt="...">-->
+<!--                    <div class="card-body">-->
+<!--                        <h5 class="card-title">Card title</h5>-->
+<!--                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-3 bg-body rounded">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 bg-body rounded">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/stage/home">乐高学院</a>
+        <a class="navbar-brand" href="/stage/index">乐高学院</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -8,20 +8,20 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/stage/home">首页</a>
+                    <a class="nav-link active" aria-current="page" href="/stage/index">首页</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        竞赛
+                        乐高竞赛
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="competitions/news.html">最新竞赛</a></li>
-                        <li><a class="dropdown-item" href="competitions/category.html">竞赛类别</a></li>
+                        <li><a class="dropdown-item" href="competitions_news">最新竞赛</a></li>
+                        <li><a class="dropdown-item" href="competitions_category">竞赛类别</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">公告展示</a></li>
+                        <li><a class="dropdown-item" href="guides">公告栏</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -33,15 +33,35 @@
             </ul>
 
             <form class="d-flex" role="search">
-                <a class="nav-link" href="/stage/myhome">个人中心</a>
-                    <figure class="figure" id="figure">
-                        <!--                                figure-img img-fluid rounded-->
-<!--                        头像的url设计成user/figure/{uid} 每次更新只要覆盖文件就行-->
-                        <img src="/resource/user/figure/3.jpg" class=""
-                             style="display:block;border-radius:50%;width: 40px;background: palevioletred"
-                             alt="...">
-                    </figure>
-                <a class="nav-link" href="/stage/myhome" id="navUname"></a>
+<!--                <a class="nav-link" href="/stage/myhome">个人中心</a>-->
+<!--                    <figure class="figure" id="figure">-->
+<!--                        &lt;!&ndash;                                figure-img img-fluid rounded&ndash;&gt;-->
+<!--&lt;!&ndash;                        头像的url设计成user/figure/{uid} 每次更新只要覆盖文件就行&ndash;&gt;-->
+<!--                        <img id="avatar" src="" class=""-->
+<!--                             style="display:block;border-radius:50%;width: 40px;height:40px;border:none;background: palevioletred"-->
+<!--                             >-->
+<!--                    </figure>-->
+
+<!--                <a class="nav-link" href="/stage/myhome" id="navUname"></a>-->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+
+                            <a class="nav-link dropdown-toggle" href="#" id="navUname" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            </a>
+                            <img id="avatar" src="" class=""
+                                 style="display:inline-block;border-radius:50%;width: 40px;height:40px;border:none;background: palevioletred"
+                            >
+                            <ul class="dropdown-menu text-center" aria-labelledby="navUname">
+                                <li><a class="dropdown-item" href="/stage/myhome">个人中心</a></li>
+                                <li><a class="dropdown-item" href="#" id="logout">退出登录</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
                 <a class="nav-link" href="/stage/login" id="loginBtn">登录</a>
                 <a class="btn btn-outline-danger" href="/stage/register" id="registerBtn">注册</a>
             </form>
@@ -50,16 +70,36 @@
 </nav>
 <script>
     const uname = $.cookie('uname');
+    const avatar = $.cookie('avatar');
     $('#navUname').text(uname);
+    $('#avatar').attr('src',avatar);
     if (uname){
         $('#navUname').addClass('d-inline')
-        $('#figure').addClass('d-inline')
+        $('#avatar').addClass('d-inline')
         $('#loginBtn').addClass('d-none')
         $('#registerBtn').addClass('d-none')
     }else {
-        $('#figure').addClass('d-none')
+        $('#avatar').addClass('d-none')
         $('#navUname').addClass('d-none')
         $('#loginBtn').addClass('d-inline')
         $('#registerBtn').addClass('d-inline')
     }
+
+    $('#logout').click(function (e){
+        var r = confirm("是否退出登陆？");
+        if (r === true) {
+           if($.removeCookie('uid',{ path: '/' }) && $.removeCookie('uname',{ path: '/' }) && $.removeCookie('avatar',{ path: '/' })){
+               console.log('删除cookie成功')
+               window.location.replace('/stage/index');
+           }else {
+               console.log('删除cookie失败')
+           }
+            // const uname = $.cookie('uname');
+            // const avatar = $.cookie('avatar');
+            // console.log(uname)
+
+        } else {
+            x = "您按了取消！";
+        }
+    })
 </script>

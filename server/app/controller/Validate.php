@@ -16,6 +16,7 @@ class Validate
             if ($user['password'] === $data['password']) {
                 Cookie::set('uid', $user['id'], 3600);
                 Cookie::set('uname', $user['nickname'], 3600);
+                Cookie::set('avatar', $user['avatar'], 3600);
                 return json(['code' => 1, 'message' => '登录成功']);
             } else {
                 return json(['code' => 0, 'message' => '账户或者密码错误']);

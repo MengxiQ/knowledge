@@ -25,8 +25,9 @@
                             <label for="password">密码</label>
                         </div>
                         <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="remember">
-                            <label class="form-check-label" for="remember">记住我</label>
+                            <a href="/stage/register">新用户注册</a>
+<!--                            <input type="checkbox" class="form-check-input" id="remember">-->
+<!--                            <label class="form-check-label" for="remember">记住我</label>-->
                         </div>
                         <button type="submit" class="btn btn-primary w-100" id="login">登录</button>
                     </form>
@@ -72,7 +73,7 @@
             var toastLiveExample = document.getElementById('liveToast')
             var toast = new bootstrap.Toast(toastLiveExample)
             toast.show()
-            setTimeout(()=>{window.location.href = "/stage/myhome"},1500)
+            setTimeout(()=>{window.location.href = "/stage/myhome"},500)
         }).catch(e => {
             console.log(e)
         })

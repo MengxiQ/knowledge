@@ -68,4 +68,12 @@ class Competitions
         CompetitionsModel::destroy($id);
         return json(['code' => 1, 'message' => '删除成功']);
     }
+    //上传封面
+    public function upload_cover(){
+        // 获取表单上传文件 例如上传了001.jpg
+        $file = request()->file('img');
+        // 上传到本地服务器
+        $savename = \think\facade\Filesystem::putFile( 'competition/cover', $file);
+        return json('/storage/' . $savename);
+    }
 }
