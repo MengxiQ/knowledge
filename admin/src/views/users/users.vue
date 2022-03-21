@@ -6,8 +6,9 @@
       @click="handleAdd"
     >添加
     </el-button>
+    <div><small style="color: #75797e">前台用户.</small></div>
     <el-table
-      :data="list.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+      :data="list.filter(data => !search || data.nickname.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%"
     >
       <el-table-column
@@ -25,7 +26,11 @@
       <el-table-column
         label="密码"
         prop="password"
-      />
+      >
+        <template slot-scope="scope">
+          <el-input size="small" type="password" :value="scope.row.password" show-password/>
+        </template>
+      </el-table-column>
       <el-table-column
         label="邮箱"
         prop="email"
@@ -44,6 +49,7 @@
       >
         <template slot-scope="scope">
           <img v-if="scope.row.avatar" :src="RESOURCE_API + scope.row.avatar" class="avatar">
+          <!--          <img v-if="scope.row.avatar" :src="scope.row.avatar" class="avatar">-->
         </template>
       </el-table-column>
       <el-table-column
@@ -57,7 +63,7 @@
           <el-input
             v-model="search"
             size="mini"
-            placeholder="输入关键字搜索[用户名]"
+            placeholder="搜索[用户名]"
           />
         </template>
         <template slot-scope="scope">
@@ -75,42 +81,46 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog :title="isCreate ? '新建用户' : '编辑用户信息'" :visible.sync="dialogFormVisible" width="35%"
-               :before-close="beforeClose"
+    <el-dialog
+      :title="isCreate ? '新建用户' : '编辑用户信息'"
+      :visible.sync="dialogFormVisible"
+      width=""
+      :before-close="beforeClose"
     >
       <el-form ref="myForm" :model="form">
         <el-form-item label="用户名" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.nickname" autocomplete="off"></el-input>
+          <el-input v-model="form.nickname" autocomplete="off" />
         </el-form-item>
         <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
-          <el-input v-model="form.password" type="text" autocomplete="off"></el-input>
+          <el-input v-model="form.password" type="text" autocomplete="off" />
         </el-form-item>
         <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
-          <el-input v-model="form.email" type="email" autocomplete="off"></el-input>
+          <el-input v-model="form.email" type="email" autocomplete="off" />
         </el-form-item>
         <el-form-item label="姓名" :label-width="formLabelWidth" prop="nickname">
-          <el-input v-model="form.name" autocomplete="off"></el-input>
+          <el-input v-model="form.name" autocomplete="off" />
         </el-form-item>
         <el-form-item label="电话" :label-width="formLabelWidth" prop="phone">
-          <el-input v-model="form.phone" autocomplete="off"></el-input>
+          <el-input v-model="form.phone" autocomplete="off" />
         </el-form-item>
         <el-form-item label="地址" :label-width="formLabelWidth" prop="address">
-          <el-input v-model="form.address" autocomplete="off"></el-input>
+          <el-input v-model="form.address" autocomplete="off" />
         </el-form-item>
         <el-form-item label="头像" :label-width="formLabelWidth" prop="avatar">
           <el-upload
             class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            :action="BASE_API + '/users/upload_avatar'"
+            name="avatar"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
           >
-            <img v-if="form.avatar" :src="form.avatar" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            <img v-if="form.avatar" :src="RESOURCE_API + form.avatar" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-form-item>
         <el-form-item label="个性签名" :label-width="formLabelWidth" prop="motto">
-          <el-input v-model="form.motto" type="textarea" autocomplete="off"></el-input>
+          <el-input v-model="form.motto" type="textarea" autocomplete="off" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -149,6 +159,9 @@ export default {
     }
   },
   computed: {
+    BASE_API() {
+      return process.env.VUE_APP_BASE_API
+    },
     RESOURCE_API() {
       return process.env.VUE_APP_RESOURCE_API
     }
@@ -223,7 +236,8 @@ export default {
     },
     // 上传头像
     handleAvatarSuccess(res, file) {
-      this.form.avatar = URL.createObjectURL(file.raw)
+      // this.form.avatar = URL.createObjectURL(file.raw)
+      this.form.avatar = res
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg'

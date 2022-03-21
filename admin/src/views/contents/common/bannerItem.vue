@@ -1,17 +1,18 @@
 <template>
   <div class="box">
     <el-image
-      @click="isEdit = !isEdit"
       :src="RESOURCE_API + item.img"
-      fit="fill"></el-image>
+      fit="fill"
+      @click="isEdit = !isEdit"
+    />
     <div class="mask">
       <h4 class="title">{{ item.title }}</h4>
       <p class="sub">{{ item.sub }}</p>
     </div>
 
-    <div class="opration" >
-      <span class="el-icon-edit" @click="isEdit = !isEdit" ></span>
-      <span class="el-icon-delete" @click="$emit('delete')"></span>
+    <div class="opration">
+      <span class="el-icon-edit" @click="isEdit = !isEdit" />
+      <span class="el-icon-delete" @click="$emit('delete')" />
     </div>
     <el-dialog :visible.sync="isEdit" title="编辑">
       <el-form v-model="item" label-position="left" label-width="100px">
@@ -22,16 +23,17 @@
             name="img"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
+            :before-upload="beforeAvatarUpload"
+          >
             <img v-if="item.img" :src="RESOURCE_API + item.img" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-form-item>
         <el-form-item label="标题">
-          <el-input v-model="item.title"></el-input>
+          <el-input v-model="item.title" />
         </el-form-item>
         <el-form-item label="副标题">
-          <el-input v-model="item.sub"></el-input>
+          <el-input v-model="item.sub" />
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -58,22 +60,22 @@ export default {
       return process.env.VUE_APP_RESOURCE_API
     }
   },
-  methods:{
+  methods: {
     handleAvatarSuccess(res, file) {
       this.item.img = res
       // this.item.img = URL.createObjectURL(file.raw);
     },
     beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isLt2M = file.size / 1024 / 1024 < 2;
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
 
       if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
+        this.$message.error('上传头像图片只能是 JPG 格式!')
       }
       if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
+        this.$message.error('上传头像图片大小不能超过 2MB!')
       }
-      return isJPG && isLt2M;
+      return isJPG && isLt2M
     }
   }
 }
@@ -87,7 +89,6 @@ export default {
   padding: 5px;
   font-weight: bold;
 
-
 }
 .opration span{
   margin-right: 10px;
@@ -99,7 +100,6 @@ export default {
   width: auto;
   height: auto;
   position: relative;
-
 
 }
 
@@ -119,7 +119,6 @@ export default {
     position: relative;
     overflow: hidden;
   }
-
 
 /deep/ .avatar-uploader .el-upload:hover {
   border-color: #409EFF;

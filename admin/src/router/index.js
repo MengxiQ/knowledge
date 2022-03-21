@@ -17,7 +17,7 @@ import Layout from '@/layout'
  * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
  * name:'router-name'             the name is used by <keep-alive> (must set!!!)
  * meta : {
-    roles: ['admin','editor']    control the page roles (you can set multiple roles)
+    roles: ['super','editor']    control the page roles (you can set multiple roles)
     title: 'title'               the name show in sidebar and breadcrumb (recommend set)
     icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
     breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
@@ -51,7 +51,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'dashboard' }
     }]
   },
 
@@ -60,7 +60,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/competitions/list',
     name: 'Competitions',
-    meta: { title: '竞赛管理', icon: 'el-icon-s-help' },
+    meta: { title: '竞赛管理', icon: 'el-icon-s-finance' },
     children: [
       {
         path: 'list',
@@ -76,9 +76,9 @@ export const constantRoutes = [
       },
       {
         path: 'attend',
-        name: '',
+        name: 'Attend',
         component: () => import('@/views/competitions/attend'),
-        meta: { title: '参赛管理', icon: 'tree' }
+        meta: { title: '参赛管理', icon: 'el-icon-s-claim' }
       }
     ]
   },
@@ -91,77 +91,50 @@ export const constantRoutes = [
         path: 'index',
         name: '',
         component: () => import('@/views/users/users'),
-        meta: { title: '用户列表', icon: 'form' }
+        meta: { title: '用户列表', icon: 'el-icon-user-solid' }
       }
     ]
   },
 
   {
-    path: '/nested',
+    path: '/contents',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
+    redirect: '/contents/home',
+    name: 'Contents',
     meta: {
       title: '内容管理',
       icon: 'nested'
     },
     children: [
       {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
+        path: 'home',
+        component: () => import('@/views/contents/home/home'),
+        name: 'contentsHome',
+        meta: { title: '首页管理' }
       },
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
+        path: 'competitions',
+        component: () => import('@/views/contents/competitions/competitions'),
+        name: 'contentsCompetitions',
+        meta: { title: '竞赛页面' }
+      },
+      {
+        path: 'guides',
+        component: () => import('@/views/contents/guides/guides'),
+        name: 'contentsGuides',
+        meta: { title: '公告列表' }
       }
     ]
   },
 
   {
-    path: 'external-link',
+    path: '管理员',
     component: Layout,
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+        path: '/super',
+        component: () => import('@/views/super/super'),
+        meta: { title: '管理员', icon: 'el-icon-s-custom' }
       }
     ]
   },

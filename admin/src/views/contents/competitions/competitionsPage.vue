@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <h4>最新竞赛</h4>
+  <div class="container">
+    <h4>{{ title }}</h4>
+    <small>轮播图展示的图片.</small>
     <banner :banner="form.content.banner" />
+    <el-button class="saveBtn" type="primary" @click="handleSave">保存</el-button>
   </div>
 </template>
 
@@ -9,16 +11,17 @@
 import { getContentsByPageName, updateContents } from '@/api/contents'
 import Banner from '../common/banner'
 export default {
-  name: 'CompetitionsNews',
+  name: 'CompetitionsPage',
   components: { Banner },
   props: {
+    title: String,
     pageName: String
   },
   data() {
     return {
       form: {
-        id: 2,
-        page_name: 'competitions_news',
+        // id: 3,
+        page_name: '',
         content: {
           banner: [
             {
@@ -29,6 +32,14 @@ export default {
           ]
         }
       }
+    }
+  },
+  watch: {
+    'pageName': {
+      handler: function(val) {
+        this.form.page_name = val
+      },
+      immediate: true
     }
   },
   created() {
@@ -56,10 +67,20 @@ export default {
         this.$message.error('获取页面信息失败')
       })
     }
+  },
+  mounted() {
+    this.getPageData()
   }
 }
 </script>
 
 <style scoped>
-
+.container{
+  position: relative;
+}
+.saveBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
 </style>

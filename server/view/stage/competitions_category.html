@@ -32,28 +32,14 @@
                     <a class="nav-link {if $v->id == $current}active{/if}" href="?type={$v->id}">{$v->name}</a>
                 </li>
                 {/volist}
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link active" aria-current="page" href="#">类别1</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="#">类别2</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="#">类别3</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="#">类别4</a>-->
                 </li>
             </ul>
             <p class="mt-4">{$currentTyps->desc}</p>
         </div>
-
         <table class="table table-bordered">
             <tbody>
-            <!--            <tr class="shadow-lg p-3 mb-5 bg-body rounded">-->
             {volist name="competitions" id="v" key="k"}
             <tr class="">
-
                 <td colspan="1" class="td-content-col">
                     <a href="/stage/detail?id={$v->id}" class="h5 text-decoration-none" style="color: #1a1e21"><strong>{$v->title}</strong></a>
                     {if $v['status'] == 'register'}
@@ -96,127 +82,12 @@
 
             </tr>
             {/volist}
-<!--            <tr class="">-->
 
-<!--                <td colspan="1" class="td-content-col">-->
-<!--                    <p class="h5"><strong>很长很长的活动标题</strong></p>-->
-<!--                    <span class="badge bg-danger">进行中</span>-->
-<!--                    <p>-->
-<!--                        很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述-->
-<!--                        很长很长很长的活动活动描述。-->
-<!--                    </p>-->
-<!--                    <small class="text-muted">举办方：乐高学院</small>-->
-<!--                </td>-->
-<!--                <td class="align-middle" style="width: 350px;text-align: center">-->
-<!--                    <div>报名人数：9999</div>-->
-<!--                    <div>截止日期：2022/02/02</div>-->
-<!--                </td>-->
-<!--                <td class="align-middle" style="width: 200px;text-align: center">-->
-<!--                    <button class="btn btn-danger" style="border-radius: 0">立即报名</button>-->
-<!--                </td>-->
-
-<!--            </tr>-->
-<!--            <tr class="">-->
-
-<!--                <td colspan="1" class="td-content-col">-->
-<!--                    <p class="h5"><strong>很长很长的活动标题</strong></p>-->
-<!--                    <span class="badge bg-danger">进行中</span>-->
-<!--                    <p>-->
-<!--                        很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述-->
-<!--                        很长很长很长的活动活动描述。-->
-<!--                    </p>-->
-<!--                    <small class="text-muted">举办方：乐高学院</small>-->
-<!--                </td>-->
-<!--                <td class="align-middle" style="width: 350px;text-align: center">-->
-<!--                    <div>报名人数：9999</div>-->
-<!--                    <div>截止日期：2022/02/02</div>-->
-<!--                </td>-->
-<!--                <td class="align-middle" style="width: 200px;text-align: center">-->
-<!--                    <button class="btn btn-danger" style="border-radius: 0">立即报名</button>-->
-<!--                </td>-->
-
-<!--            </tr>-->
-<!--            <tr class="">-->
-
-<!--                <td colspan="1" class="td-content-col">-->
-<!--                    <p class="h5"><strong>很长很长的活动标题</strong></p>-->
-<!--                    <span class="badge bg-danger">进行中</span>-->
-<!--                    <p>-->
-<!--                        很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述-->
-<!--                        很长很长很长的活动活动描述。-->
-<!--                    </p>-->
-<!--                    <small class="text-muted">举办方：乐高学院</small>-->
-<!--                </td>-->
-<!--                <td class="align-middle" style="width: 350px;text-align: center">-->
-<!--                    <div>报名人数：9999</div>-->
-<!--                    <div>截止日期：2022/02/02</div>-->
-<!--                </td>-->
-<!--                <td class="align-middle" style="width: 200px;text-align: center">-->
-<!--                    <button class="btn btn-danger" style="border-radius: 0">立即报名</button>-->
-<!--                </td>-->
-
-<!--            </tr>-->
-<!--            <tr class="">-->
-
-<!--                <td colspan="1" class="td-content-col">-->
-<!--                    <p class="h5"><strong>很长很长的活动标题</strong></p>-->
-<!--                    <span class="badge bg-danger">进行中</span>-->
-<!--                    <p>-->
-<!--                        很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述-->
-<!--                        很长很长很长的活动活动描述。-->
-<!--                    </p>-->
-<!--                    <small class="text-muted">举办方：乐高学院</small>-->
-<!--                </td>-->
-<!--                <td class="align-middle" style="width: 350px;text-align: center">-->
-<!--                    <div>报名人数：9999</div>-->
-<!--                    <div>截止日期：2022/02/02</div>-->
-<!--                </td>-->
-<!--                <td class="align-middle" style="width: 200px;text-align: center">-->
-<!--                    <button class="btn btn-danger" style="border-radius: 0">立即报名</button>-->
-<!--                </td>-->
-
-<!--            </tr>-->
-<!--            <tr class="">-->
-
-<!--                <td colspan="1" class="td-content-col">-->
-<!--                    <p class="h5"><strong>很长很长的活动标题</strong></p>-->
-<!--                    <span class="badge bg-danger">进行中</span>-->
-<!--                    <p>-->
-<!--                        很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述，很长很长很长的活动活动描述-->
-<!--                        很长很长很长的活动活动描述。-->
-<!--                    </p>-->
-<!--                    <small class="text-muted">举办方：乐高学院</small>-->
-<!--                </td>-->
-<!--                <td class="align-middle" style="width: 350px;text-align: center">-->
-<!--                    <div>报名人数：9999</div>-->
-<!--                    <div>截止日期：2022/02/02</div>-->
-<!--                </td>-->
-<!--                <td class="align-middle" style="width: 200px;text-align: center">-->
-<!--                    <button class="btn btn-danger" style="border-radius: 0">立即报名</button>-->
-<!--                </td>-->
-
-<!--            </tr>-->
             </tbody>
         </table>
-<!--        <ul class="pagination">-->
-<!--            <li class="page-item" style="line-height: 40px">-->
-<!--                <span class="text-muted">总数：99 条</span>-->
-<!--            </li>-->
-<!--            <li class="page-item">-->
-<!--                <a class="page-link" href="#" aria-label="Previous">-->
-<!--                    <span aria-hidden="true">&laquo;</span>-->
-<!--                </a>-->
-<!--            </li>-->
-<!--            <li class="page-item"><a class="page-link" href="#">1</a></li>-->
-<!--            <li class="page-item"><a class="page-link" href="#">2</a></li>-->
-<!--            <li class="page-item"><a class="page-link" href="#">3</a></li>-->
-<!--            <li class="page-item">-->
-<!--                <a class="page-link" href="#" aria-label="Next">-->
-<!--                    <span aria-hidden="true">&raquo;</span>-->
-<!--                </a>-->
-<!--            </li>-->
-<!--        </ul>-->
+
     </div>
+</div>
 </div>
 </body>
 </html>

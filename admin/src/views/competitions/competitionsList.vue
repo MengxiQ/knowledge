@@ -7,7 +7,7 @@
     >添加
     </el-button>
     <el-table
-      :data="list.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+      :data="list.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%"
     >
       <el-table-column
@@ -19,7 +19,20 @@
         prop="type"
       >
         <template slot-scope="scope">
-          {{mapType(scope.row.type)}}
+          {{ mapType(scope.row.type) }}
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="封面"
+        prop="cover"
+        width="200"
+      >
+        <template slot-scope="scope">
+          <el-image
+            style="width: 200px; height: 100px"
+            :src="RESOURCE_API + scope.row.cover"
+            :preview-src-list="[RESOURCE_API + scope.row.cover]"
+          />
         </template>
       </el-table-column>
       <el-table-column
@@ -154,6 +167,19 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item label="封面" :label-width="formLabelWidth" prop="title">
+          <el-upload
+            class="avatar-uploader"
+            :action="BASE_API + 'competitions/upload_cover'"
+            name="img"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
+          >
+            <img v-if="form.cover" :src="RESOURCE_API + form.cover" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon" />
+          </el-upload>
+        </el-form-item>
         <el-form-item label="标题" :label-width="formLabelWidth" prop="title">
           <el-input v-model="form.title" type="text" autocomplete="off" />
         </el-form-item>
@@ -259,7 +285,8 @@ export default {
         end_date: '',
         status: '',
         title: '',
-        type: null
+        type: null,
+        cover: null,
       },
       form: {},
       search: '',
@@ -267,6 +294,14 @@ export default {
       competitionTypeList: [],
       showArticleCache: '',
       showArticleVisible: false
+    }
+  },
+  computed: {
+    BASE_API() {
+      return process.env.VUE_APP_BASE_API
+    },
+    RESOURCE_API() {
+      return process.env.VUE_APP_RESOURCE_API
     }
   },
   watch: {
@@ -282,9 +317,29 @@ export default {
   created() {
     this.form = this.temp
   },
+  mounted() {
+    this.getList()
+    this.getTypes()
+  },
   methods: {
+    handleAvatarSuccess(res, file) {
+      this.form.cover = res
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
+    },
     mapType(typeId) {
-      return this.competitionTypeList.find(ele => ele.id === Number(typeId)).name;
+      if (this.competitionTypeList.length === 0) return ''
+      return this.competitionTypeList.find(ele => ele.id === Number(typeId)).name
     },
     showArticle(article) {
       this.showArticleCache = article
@@ -409,10 +464,6 @@ export default {
         this.$message.error('获取列表失败.')
       })
     }
-  },
-  mounted() {
-    this.getList()
-    this.getTypes()
   }
 }
 </script>
@@ -433,15 +484,15 @@ export default {
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
-  width: 178px;
+  width: 278px;
   height: 178px;
   line-height: 178px;
   text-align: center;
 }
 
 .avatar {
-  width: 178px;
-  height: 178px;
+  /*width: 178px;*/
+  /*height: 178px;*/
   display: block;
 }
 </style>
