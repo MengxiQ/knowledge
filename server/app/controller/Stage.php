@@ -144,14 +144,14 @@ class Stage extends BaseController
             $attend = AttendModel::where('competition',$id)->where('user',$uid)->find();
             //到达比赛开始时间，并且用户报名成功 开放上传按钮
 
-            $nowTime = date("Y-m-d H:i:s");
-//            print_r($nowTime);
-            print_r($competition['start_date'] > $nowTime);
+//            $nowTime = date("Y-m-d H:i:s");
+////            print_r($nowTime);
+//            print_r($competition['start_date'] > $nowTime);
 
             View::assign('competition',$competition);
             View::assign('attend',$attend);
 
-//            return View::fetch();
+            return View::fetch();
         } else {
             return View::fetch('../view/stage/login.html');
         }
