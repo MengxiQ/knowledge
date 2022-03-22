@@ -1,0 +1,29 @@
+@charset "UTF-8";
+.home .carousel-img {
+  height: 350px;
+  background-color: pink;
+}
+.home .card-img {
+  height: 180px;
+  background-color: pink;
+}
+.home .my-card-text {
+  text-align: justify;
+  text-justify: inter-ideograph;
+  text-indent: 2em;
+  display: block;
+  height: 70px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.home .my-card-title {
+  /* 设置单行文本只需要三行代码即可搞定 */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/*# sourceMappingURL=home.css.map */

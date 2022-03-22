@@ -1,0 +1,26 @@
+@charset "UTF-8";
+.news .card-img {
+  height: 215px;
+  width: 415px;
+  background: pink;
+}
+.news .my-card-title {
+  /* 设置单行文本只需要三行代码即可搞定 */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.news .my-card-text {
+  text-align: justify;
+  text-justify: inter-ideograph;
+  text-indent: 2em;
+  display: block;
+  height: 70px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+/*# sourceMappingURL=news.css.map */

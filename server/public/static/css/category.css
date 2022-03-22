@@ -1,0 +1,15 @@
+.category .carousel-img {
+  height: 350px;
+  background-color: pink;
+}
+.category .card-img {
+  height: 150px;
+  width: 308px;
+  background-color: pink;
+}
+
+.td-content-col {
+  padding: 20px !important;
+}
+
+/*# sourceMappingURL=category.css.map */
