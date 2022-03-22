@@ -128,6 +128,7 @@
         align="right"
       >
         <template slot="header" slot-scope="scope">
+          搜索
           <el-input
             v-model="search"
             size="mini"
@@ -168,13 +169,13 @@
           </el-select>
         </el-form-item>
         <el-form-item label="封面" :label-width="formLabelWidth" prop="title">
+<!--          :before-upload="beforeAvatarUpload"-->
           <el-upload
             class="avatar-uploader"
             :action="BASE_API + 'competitions/upload_cover'"
             name="img"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
           >
             <img v-if="form.cover" :src="RESOURCE_API + form.cover" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon" />
@@ -325,18 +326,18 @@ export default {
     handleAvatarSuccess(res, file) {
       this.form.cover = res
     },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
-      }
-      return isJPG && isLt2M
-    },
+    // beforeAvatarUpload(file) {
+    //   const isJPG = file.type === 'image/jpeg'
+    //   const isLt2M = file.size / 1024 / 1024 < 2
+    //
+    //   if (!isJPG) {
+    //     this.$message.error('上传头像图片只能是 JPG 格式!')
+    //   }
+    //   if (!isLt2M) {
+    //     this.$message.error('上传头像图片大小不能超过 2MB!')
+    //   }
+    //   return isJPG && isLt2M
+    // },
     mapType(typeId) {
       if (this.competitionTypeList.length === 0) return ''
       return this.competitionTypeList.find(ele => ele.id === Number(typeId)).name

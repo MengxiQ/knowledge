@@ -6,14 +6,33 @@
     <!--      @click="handleAdd"-->
     <!--    >添加-->
     <!--    </el-button>-->
+
+    <div class="search-container">
+      <el-input
+        v-model="search.competition_title"
+        size="mini"
+        placeholder="赛事名称"
+        style="width: 150px;"
+        class="search-input"
+      />
+      <el-input
+        v-model="search.nickname"
+        size="mini"
+        placeholder="用户名"
+        style="width: 150px;"
+        class="search-input"
+      />
+      <el-button icon="el-icon-search" class="" size="mini" type="primary">搜索</el-button>
+    </div>
     <el-table
-      :data="list.filter(data => !search || data.uname.toLowerCase().includes(search.toLowerCase()))"
+      :data="filterList"
       style="width: 100%"
     >
       <el-table-column
         label="id"
         prop="id"
       />
+
       <el-table-column
         label="用户名"
         prop="nickname"
@@ -28,7 +47,7 @@
         prop="date"
       >
         <template slot-scope="scope">
-          <i class="el-icon-time"/>
+          <i class="el-icon-time" />
           <span style="margin-left: 10px">{{ scope.row.date }}</span>
         </template>
       </el-table-column>
@@ -46,18 +65,14 @@
         prop="form"
       >
         <template slot-scope="scope">
-          <el-button size="mini" @click.native="handleAudit(scope.row)" type="primary">审核</el-button>
+          <el-button size="mini" type="primary" @click.native="handleAudit(scope.row)">审核</el-button>
         </template>
       </el-table-column>
       <el-table-column
         align="right"
       >
         <template slot="header" slot-scope="scope">
-          <el-input
-            v-model="search"
-            size="mini"
-            placeholder="输入关键字搜索[用户名]"
-          />
+          操作
         </template>
         <template slot-scope="scope">
           <el-button
@@ -95,22 +110,32 @@ export default {
   data() {
     return {
       formCache: {
-        competition: '某某竞赛',
-        uname: '大露露',
-        name: '小露露',
-        phone: '15777850920',
-        email: '1486073356@qq.com',
-        xueli: '本科',
-        school: '广西大学',
-        address: '很长很长很长的地址'
+        competition: '',
+        uname: '',
+        name: '',
+        phone: '',
+        email: '',
+        xueli: '',
+        school: '',
+        address: ''
       },
       activeAttend: {},
       loading: false,
       isCreate: true, // 是否是新建
       formLabelWidth: '120px',
       dialogFormVisible: false,
-      search: '',
+      search: {
+        nickname: '',
+        competition_title: ''
+      },
       list: []
+    }
+  },
+  computed: {
+    filterList() {
+      return this.list.filter(ele => {
+        return ele.competition_title.trim().toLowerCase().includes(this.search.competition_title.trim().toLowerCase()) && ele.nickname.trim().toLowerCase().includes(this.search.nickname.trim().toLowerCase())
+      })
     }
   },
   mounted() {
@@ -256,6 +281,15 @@ export default {
 </script>
 
 <style scoped>
+.search-container{
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #606266;
+}
+.search-input{
+  margin-right: 10px;
+}
 /deep/ .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
@@ -282,4 +316,5 @@ export default {
   height: 178px;
   display: block;
 }
+
 </style>

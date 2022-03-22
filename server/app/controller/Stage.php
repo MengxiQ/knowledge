@@ -108,7 +108,7 @@ class Stage extends BaseController
         for($x=0;$x<count($competitions);$x++)
         {
             //报名人数
-            $statistics = AttendModel::where('competition',$competitions[$x]->id)->count();
+            $statistics = AttendModel::where('competition',$competitions[$x]->id)->where('status','pass')->count();
             $competitions[$x]->statistics = $statistics;
         }
         $currentTyps = CompetitionTypeModel::where('id',$filter)->findOrEmpty();
@@ -135,8 +135,8 @@ class Stage extends BaseController
             $param = Request::param();
             $id = $param['id'];
             $competition = CompetitionsModel::where('id',$id)->find();
-            //报名人数
-            $statistics = AttendModel::where('competition',$id)->count();
+            //报名人数,报名成功了才算
+            $statistics = AttendModel::where('competition',$id)->where('status','pass')->count();
             $competition->statistics = $statistics;
             View::assign('competition',$competition);
 
