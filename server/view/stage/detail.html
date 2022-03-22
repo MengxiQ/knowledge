@@ -56,7 +56,13 @@
                 <td class="align-middle" style="width: 200px;text-align: center">
 <!--                    <a class="btn btn-danger" style="border-radius: 0" href="/stage/attend/{$competition['id']}">立即报名</a>-->
                     {if $competition['status'] == 'register'}
-                    <a class="btn btn-danger" style="border-radius: 0" href="/stage/attend/{$competition->id}" >立即报名</a>
+                            {if $attend && $attend['status'] == 'pass'}
+                                <a class="btn btn-success disabled" style="border-radius: 0" ><i class="bi bi-check-lg" style="margin-right: 5px;"></i>已报名</a>
+                            {elseif $attend['status'] == 'commit'}
+                                <a class="btn btn-primary disabled" style="border-radius: 0" >报名审核中</a>
+                            {else}
+                                <a class="btn btn-danger" style="border-radius: 0" href="/stage/attend/{$competition->id}" >立即报名</a>
+                            {/if}
                     {elseif $competition['status'] == 'begin'/}
                     <span class="btn btn-primary disabled" style="border-radius: 0" >比赛进行中</span>
                     {elseif $competition['status'] == 'end'/}
@@ -81,8 +87,12 @@
                         aria-selected="false">竞赛规则
                 </button>
                 <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill"
-                        data-bs-target="#v-pills-awards" type="button" role="tab" aria-controls="v-pills-messages"
+                        data-bs-target="#v-pills-awards" type="button" role="tab" aria-controls="v-pills-awards"
                         aria-selected="false">奖项设置
+                </button>
+                <button class="nav-link" id="v-pills-commit-tab" data-bs-toggle="pill"
+                        data-bs-target="#v-pills-commit" type="button" role="tab" aria-controls="v-pills-commit"
+                        aria-selected="false">提交作品
                 </button>
             </div>
             <div class="tab-content w-100" id="v-pills-tabContent">
@@ -101,10 +111,24 @@
                   </div>
 
                 </div>
-                <div class="tab-pane fade" id="v-pills-awards" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                <div class="tab-pane fade" id="v-pills-awards" role="tabpanel" aria-labelledby="v-pills-awards-tab">
                     <div class="w-100" style="width: 880px;">
                         <!--                    奖项设置-->
                         {$competition['awards'] |raw}
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="v-pills-commit" role="tabpanel" aria-labelledby="v-pills-commit-tab">
+                    <div class="w-100" style="width: 880px;">
+
+                        开放上传
+<!--                        上传须知：-->
+<!--                        本赛事为个人赛；作品以zip/rar压缩包形式提交，大小不超过500MB，压缩包命名方式为：题目号+就读学校+姓名。-->
+
+<!--                        【命名规范】作品名请尽量简洁，且不要包含汉字状态下的符号。-->
+
+<!--                        【上传次数】您所在团队当前阶段共可上传5次作品，团队已经上传 0次（0/5）-->
+
+<!--                        【格式大小】限上传格式为 zip,rar的文件，且大小＜500MB-->
                     </div>
                 </div>
             </div>

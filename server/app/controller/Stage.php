@@ -138,9 +138,20 @@ class Stage extends BaseController
             //报名人数,报名成功了才算
             $statistics = AttendModel::where('competition',$id)->where('status','pass')->count();
             $competition->statistics = $statistics;
-            View::assign('competition',$competition);
 
-            return View::fetch();
+            //是否报名该比赛,根据status属性判断是否报名成功,
+            //有新建提交和已经报名通过的的不开放报名，报名被驳回的开放报名
+            $attend = AttendModel::where('competition',$id)->where('user',$uid)->find();
+            //到达比赛开始时间，并且用户报名成功 开放上传按钮
+
+            $nowTime = date("Y-m-d H:i:s");
+//            print_r($nowTime);
+            print_r($competition['start_date'] > $nowTime);
+
+            View::assign('competition',$competition);
+            View::assign('attend',$attend);
+
+//            return View::fetch();
         } else {
             return View::fetch('../view/stage/login.html');
         }
