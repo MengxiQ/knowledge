@@ -71,4 +71,5 @@ class Attend
         AttendModel::destroy($id);
         return json(['code' => 1, 'message' => '删除成功']);
     }
+
 }

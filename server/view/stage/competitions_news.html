@@ -35,18 +35,18 @@
                     <div class="btn  {$filter == 'preview' ? 'btn-info' : 'btn-outline-info'}">预告({$preview_total})</div>
                 </a>
             </li>            <li class="nav-item">
-                <a class="nav-link" href="/stage/competitions_news?filter=register">
-                    <div class="btn  {$filter == 'register' ? 'btn-success' : 'btn-outline-success'}">报名中({$register_total})</div>
+                <a class="nav-link" href="/stage/competitions_news?filter=registerStart">
+                    <div class="btn  {$filter == 'registerStart' ? 'btn-success' : 'btn-outline-success'}">报名中({$register_total})</div>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/stage/competitions_news?filter=begin">
-                    <div class="btn  {$filter == 'begin' ? 'btn-primary' : 'btn-outline-primary'}">进行中({$begin_total})</div>
+                <a class="nav-link" href="/stage/competitions_news?filter=started">
+                    <div class="btn  {$filter == 'started' ? 'btn-primary' : 'btn-outline-primary'}">进行中({$begin_total})</div>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/stage/competitions_news?filter=end">
-                    <div class="btn  {$filter == 'end' ? 'btn-dark' : 'btn-outline-dark'}">已经结束({$end_total})</div>
+                <a class="nav-link" href="/stage/competitions_news?filter=ended">
+                    <div class="btn  {$filter == 'ended' ? 'btn-dark' : 'btn-outline-dark'}">已经结束({$end_total})</div>
                 </a>
             </li>
         </ul>
@@ -58,11 +58,13 @@
                     <div class="card-body">
                         <h5 class="card-title my-card-title">{$v['title']}</h5>
 <!--                        <span class="badge bg-success">火热报名中</span>-->
-                        {if $v['status'] == 'register'}
+                        {if $v['status'] == 'registerStart'}
                         <span class="badge bg-success">火热报名中</span>
-                        {elseif $v['status'] == 'begin'/}
+                        {elseif $v['status'] == 'registerEnd'}
+                        <span class="badge bg-success">报名结束</span>
+                        {elseif $v['status'] == 'started'/}
                         <span class="badge bg-primary ">比赛进行中</span>
-                        {elseif $v['status'] == 'end'/}
+                        {elseif $v['status'] == 'ended'/}
                         <span class="badge bg-danger">比赛已结束</span>
                         {elseif $v['status'] == 'preview'/}
                         <span class="badge bg-info">赛事预告</span>

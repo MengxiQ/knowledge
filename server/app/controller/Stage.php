@@ -71,10 +71,10 @@ class Stage extends BaseController
         }
 
         $total = CompetitionsModel::count();
-        $register_total = CompetitionsModel::where('status', 'register')->count();
+        $register_total = CompetitionsModel::where('status', 'registerStart')->count();
         $preview_total = CompetitionsModel::where('status', 'preview')->count();
-        $end_total = CompetitionsModel::where('status', 'end')->count();
-        $begin_total = CompetitionsModel::where('status', 'begin')->count();
+        $end_total = CompetitionsModel::where('status', 'ended')->count();
+        $begin_total = CompetitionsModel::where('status', 'started')->count();
         View::assign('competitions', $competitions);
         View::assign('total', $total);
         View::assign('register_total', $register_total);
@@ -144,13 +144,30 @@ class Stage extends BaseController
             $attend = AttendModel::where('competition',$id)->where('user',$uid)->find();
             //到达比赛开始时间，并且用户报名成功 开放上传按钮
 
-//            $nowTime = date("Y-m-d H:i:s");
-////            print_r($nowTime);
-//            print_r($competition['start_date'] > $nowTime);
+            $nowTime = date("Y-m-d H:i:s");
+            $msg = [];
+            if($competition['start_date'] < $nowTime && $competition['end_date'] > $nowTime){
+                $msg['des'] = '比赛已经开始';
+                $msg['status'] = 'started';
+            }else if ($competition['end_date'] < $nowTime){
+                $msg['des'] = '比赛已经结束';
+                $msg['status'] = 'ended';
+            }else if ($competition['register_start_date'] < $nowTime && $competition['register_end_date'] > $nowTime){
+                $msg['des'] = '报名开放';
+                $msg['status'] = 'registerStart';
+            }else if ($competition['register_end_date'] < $nowTime && $competition['start_date'] > $nowTime){
+                $msg['des'] = '报名结束';
+                $msg['status'] = 'registerEnd';
+            } else {
+                $msg['des'] = '赛事预告';
+                $msg['status'] = 'preview';
+            }
+
+//            print_r($msg);
 
             View::assign('competition',$competition);
             View::assign('attend',$attend);
-
+            View::assign('msg',$msg);
             return View::fetch();
         } else {
             return View::fetch('../view/stage/login.html');

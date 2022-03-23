@@ -15,7 +15,25 @@ class Competitions
      */
     public function index()
     {
-        return json(CompetitionsModel::select());
+        $list = CompetitionsModel::select();
+        $nowTime = date("Y-m-d H:i:s");
+        for($index=0;$index<count($list);$index++)
+        {
+            if($list[$index]['start_date'] < $nowTime && $list[$index]['end_date'] > $nowTime){
+                $list[$index]['status'] = 'started';
+            }else if ($list[$index]['end_date'] < $nowTime){
+                $list[$index]['status'] = 'ended';
+            }else if ($list[$index]['register_start_date'] < $nowTime && $list[$index]['register_end_date'] > $nowTime){
+                $list[$index]['status'] = 'registerStart';
+            }else if ($list[$index]['register_end_date'] < $nowTime && $list[$index]['start_date'] > $nowTime){
+                $list[$index]['status'] = 'registerEnd';
+            } else {
+                $list[$index]['status'] = 'preview';
+            }
+            $list[$index]->save();
+        }
+
+        return json($list);
     }
 
     /**

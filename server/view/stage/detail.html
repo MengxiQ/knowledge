@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>竞赛详情</title>
     {include file="/layout/head"}
+    {include file="/tools/fileinput"}
+<!--    上传文件的图标-->
+    <link href="/static/libs/fontawesome-free-5.15.4-web/css/all.min.css" media="all"
+          rel="stylesheet" type="text/css"/>
 </head>
 <body style="background: #f9f9f9">
 {include file="/layout/header"}
@@ -51,25 +55,54 @@
                         <div>报名人数</div>
                         <div><strong>{$competition->statistics}</strong></div>
                     </span>
-                    <div>截止日期：{$competition['register_end_date']}</div>
+                    <div>报名开始：{$competition['register_start_date']}</div>
+                    <div>报名截止：{$competition['register_end_date']}</div>
+
                 </td>
-                <td class="align-middle" style="width: 200px;text-align: center">
-<!--                    <a class="btn btn-danger" style="border-radius: 0" href="/stage/attend/{$competition['id']}">立即报名</a>-->
-                    {if $competition['status'] == 'register'}
+                <td class="align-middle" style="width: 350px;text-align: center">
+                    <div class="mb-2">
+                        <!--                    <a class="btn btn-danger" style="border-radius: 0" href="/stage/attend/{$competition['id']}">立即报名</a>-->
+                        {if $msg['status'] == 'registerStart'}
                             {if $attend && $attend['status'] == 'pass'}
-                                <a class="btn btn-success disabled" style="border-radius: 0" ><i class="bi bi-check-lg" style="margin-right: 5px;"></i>已报名</a>
-                            {elseif $attend['status'] == 'commit'}
-                                <a class="btn btn-primary disabled" style="border-radius: 0" >报名审核中</a>
+                            <a class="btn btn-success disabled" style="border-radius: 2px" ><i class="bi bi-check-lg" style="margin-right: 5px;"></i>已报名</a>
+                            {elseif $attend && $attend['status'] == 'commit'}
+                            <a class="btn btn-primary disabled" style="border-radius: 2px" >报名审核中</a>
                             {else}
-                                <a class="btn btn-danger" style="border-radius: 0" href="/stage/attend/{$competition->id}" >立即报名</a>
+                            <a class="btn btn-danger" style="border-radius: 0" href="/stage/attend/{$competition->id}" >立即报名</a>
                             {/if}
-                    {elseif $competition['status'] == 'begin'/}
-                    <span class="btn btn-primary disabled" style="border-radius: 0" >比赛进行中</span>
-                    {elseif $competition['status'] == 'end'/}
-                    <span class="btn btn-secondary disabled" style="border-radius: 0" >比赛已结束</span>
-                    {elseif $competition['status'] == 'preview'/}
-                    <span class="btn bg-info disabled" style="border-radius: 0" >赛事预告</span>
-                    {/if}
+                        {elseif $msg['status'] == 'registerEnd'/}
+                            {if $attend && $attend['status'] == 'pass'}
+                            <a class="btn btn-success disabled" style="border-radius: 2px" ><i class="bi bi-check-lg" style="margin-right: 5px;"></i>已参与</a>
+                            {elseif $attend &&  $attend['status'] == 'commit'}
+                            <a class="btn btn-danger disabled" style="border-radius: 2px" ><i class="bi bi-check-lg" style="margin-right: 5px;"></i>报名失败</a>
+                            {else}
+                            <span class="btn btn-secondary disabled" style="border-radius: 0" >未参与</span>
+                            {/if}
+                            <span class="btn btn-primary disabled" style="border-radius: 0" >报名结束</span>
+                        {elseif $msg['status'] == 'started'/}
+                            {if $attend && $attend['status'] == 'pass'}
+                            <a class="btn btn-success disabled" style="border-radius: 2px" ><i class="bi bi-check-lg" style="margin-right: 5px;"></i>已参与</a>
+                            {elseif $attend &&  $attend['status'] == 'commit'}
+                            <a class="btn btn-danger disabled" style="border-radius: 2px" ><i class="bi bi-check-lg" style="margin-right: 5px;"></i>报名失败</a>
+                            {else}
+                            <span class="btn btn-secondary disabled" style="border-radius: 0" >未参与</span>
+                            {/if}
+                            <span class="btn btn-primary disabled" style="border-radius: 0" >比赛进行中</span>
+                        {elseif $msg['status'] == 'ended'/}
+                            {if $attend && $attend['status'] == 'pass'}
+                            <a class="btn btn-success disabled" style="border-radius: 2px" ><i class="bi bi-check-lg" style="margin-right: 5px;"></i>已参与</a>
+                            {elseif $attend &&  $attend['status'] == 'commit'}
+                            <a class="btn btn-danger disabled" style="border-radius: 2px" ><i class="bi bi-check-lg" style="margin-right: 5px;"></i>报名失败</a>
+                            {else}
+                            <span class="btn btn-secondary disabled" style="border-radius: 0" >未参与</span>
+                            {/if}
+                        <span class="btn btn-secondary disabled" style="border-radius: 0" >比赛已结束</span>
+                        {elseif $msg['status'] == 'preview'/}
+                             <span class="btn bg-info disabled" style="border-radius: 0" >赛事预告</span>
+                        {/if}
+                    </div>
+                    <div>比赛开始：{$competition['start_date']}</div>
+                    <div>比赛结束：{$competition['end_date']}</div>
                 </td>
 
             </tr>
@@ -119,8 +152,73 @@
                 </div>
                 <div class="tab-pane fade" id="v-pills-commit" role="tabpanel" aria-labelledby="v-pills-commit-tab">
                     <div class="w-100" style="width: 880px;">
-
+                        {if $msg['status'] == 'started' && $attend && $attend['status'] === 'pass'}
                         开放上传
+<!--                        <input id="input-id" name="file-data" type="file">-->
+                        <div class="" style="width: 500px;">
+                            <input id="input-id" type="file" class="file" name="works" >
+                        </div>
+                        <script>
+                            $("#input-id").fileinput({
+                                uploadAsync: true,   //异步上传
+                                uploadUrl: "/storage/upload_works",
+                                uploadExtraData: function(previewId, index) {
+                                    return {
+                                        "id":'{$attend->id}',
+                                        "user":'{$attend->id}',
+                                        "competition":'{$attend->id}'
+                                    };
+                                },
+                                language: 'zh', //设置语言
+                                showRemove: false,
+                                showUpload: false,
+                                showClose: false,
+                                browseOnZoneClick: true,
+                                previewFileIcon: '<i class="fas fa-file"></i>',
+                                allowedPreviewTypes: null, // set to empty, null or false to disable preview for all types
+                                previewFileIconSettings: {
+                                    'doc': '<i class="fas fa-file-word text-primary"></i>',
+                                    'xls': '<i class="fas fa-file-excel text-success"></i>',
+                                    'ppt': '<i class="fas fa-file-powerpoint text-danger"></i>',
+                                    'jpg': '<i class="fas fa-file-image text-warning"></i>',
+                                    'pdf': '<i class="fas fa-file-pdf text-danger"></i>',
+                                    'zip': '<i class="fas fa-file-archive text-muted"></i>',
+                                    'htm': '<i class="fas fa-file-code text-info"></i>',
+                                    'txt': '<i class="fas fa-file-text text-info"></i>',
+                                    'mov': '<i class="fas fa-file-movie-o text-warning"></i>',
+                                    'mp3': '<i class="fas fa-file-audio text-warning"></i>',
+                                },
+                                previewFileExtSettings: {
+                                    'doc': function(ext) {
+                                        return ext.match(/(doc|docx)$/i);
+                                    },
+                                    'xls': function(ext) {
+                                        return ext.match(/(xls|xlsx)$/i);
+                                    },
+                                    'ppt': function(ext) {
+                                        return ext.match(/(ppt|pptx)$/i);
+                                    },
+                                    'zip': function(ext) {
+                                        return ext.match(/(zip|rar|tar|gzip|gz|7z)$/i);
+                                    },
+                                    'htm': function(ext) {
+                                        return ext.match(/(php|js|css|htm|html)$/i);
+                                    },
+                                    'txt': function(ext) {
+                                        return ext.match(/(txt|ini|md)$/i);
+                                    },
+                                    'mov': function(ext) {
+                                        return ext.match(/(avi|mpg|mkv|mov|mp4|3gp|webm|wmv)$/i);
+                                    },
+                                    'mp3': function(ext) {
+                                        return ext.match(/(mp3|wav)$/i);
+                                    },
+                                }
+                            });
+                        </script>
+                        {else}
+                        未来开放
+                        {/if}
 <!--                        上传须知：-->
 <!--                        本赛事为个人赛；作品以zip/rar压缩包形式提交，大小不超过500MB，压缩包命名方式为：题目号+就读学校+姓名。-->
 

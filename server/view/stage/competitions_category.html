@@ -42,11 +42,13 @@
             <tr class="">
                 <td colspan="1" class="td-content-col">
                     <a href="/stage/detail?id={$v->id}" class="h5 text-decoration-none" style="color: #1a1e21"><strong>{$v->title}</strong></a>
-                    {if $v['status'] == 'register'}
+                    {if $v['status'] == 'registerStart'}
                     <span class="badge bg-success">火热报名中</span>
-                    {elseif $v['status'] == 'begin'/}
+                    {elseif $v['status'] == 'registerEnd'}
+                    <span class="badge bg-success">报名结束</span>
+                    {elseif $v['status'] == 'started'/}
                     <span class="badge bg-primary ">比赛进行中</span>
-                    {elseif $v['status'] == 'end'/}
+                    {elseif $v['status'] == 'ended'/}
                     <span class="badge bg-danger">比赛已结束</span>
                     {elseif $v['status'] == 'preview'/}
                     <span class="badge bg-info">赛事预告</span>
