@@ -78,7 +78,7 @@ export const constantRoutes = [
         path: 'attend',
         name: 'Attend',
         component: () => import('@/views/competitions/attend'),
-        meta: { title: '报名审核', icon: 'el-icon-s-claim' }
+        meta: { title: '参赛管理', icon: 'el-icon-s-claim' }
       }
     ]
   },

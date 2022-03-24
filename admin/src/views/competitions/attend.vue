@@ -43,7 +43,7 @@
       />
 
       <el-table-column
-        label="时间"
+        label="报名时间"
         prop="date"
       >
         <template slot-scope="scope">
@@ -65,7 +65,50 @@
         prop="form"
       >
         <template slot-scope="scope">
-          <el-button size="mini" type="primary" @click.native="handleAudit(scope.row)">审核</el-button>
+          <el-button size="mini" type="primary" @click.native="handleAudit(scope.row)">审核报名</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="作品"
+        prop="works"
+      >
+        <template slot-scope="scope">
+          <el-link v-if="scope.row.works" target="_blank" :href="RESOURCE_API + scope.row.works" :underline="false">
+            <el-button size="mini" type="warning">下载作品</el-button>
+          </el-link>
+          <el-button v-else size="mini" type="warning" disabled>未上传</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="成绩"
+        prop="score"
+      >
+        <template slot-scope="scope">
+          <el-popover
+            v-if="scope.row.score"
+            placement="right"
+            width="400"
+            trigger="click">
+            <div>
+              <h3><i class="el-icon-s-cooperation el-icon--left" />作品：{{ scope.row.works ? scope.row.works : '未上传' }}
+              </h3>
+              <h3><i class="el-icon-s-check el-icon--left" />评级：
+                <el-tag slot="reference" :type="scoreMap(scope.row.score).type" class="score-btn" title="查看详情">{{ scope.row.score }}</el-tag>
+              </h3>
+              <h3><i class="el-icon-s-comment el-icon--left" style="" />点评：</h3>
+              <el-input
+                v-model="scope.row.comments"
+                type="textarea"
+                :rows="5"
+                placeholder="请输入内容"
+                readonly
+              />
+            </div>
+            <el-tag slot="reference" :type="scoreMap(scope.row.score).type" class="score-btn" title="查看详情">{{ scope.row.score }} <i
+              class="el-icon-view el-icon--right"
+            /></el-tag>
+          </el-popover>
+          <el-tag v-else type="info" class="score-btn" title="查看详情">未评奖</el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -75,6 +118,7 @@
           操作
         </template>
         <template slot-scope="scope">
+          <el-button size="mini" type="primary" :disabled="!scope.row.works" @click="rating(scope.row)">评分</el-button>
           <el-button
             size="mini"
             type="danger"
@@ -88,7 +132,7 @@
       <el-descriptions title="报名信息">
         <template slot="extra">
           <el-button type="primary" size="small" @click="handlePass">通过</el-button>
-          <el-button type="danger" size="small" @click="handleRefuse">拒绝</el-button>
+          <el-button type="danger" size="small" @click="handleRefuse">驳回</el-button>
         </template>
         <el-descriptions-item label="用户名">{{ formCache.nickname }}</el-descriptions-item>
         <el-descriptions-item label="姓名">{{ formCache.name }}</el-descriptions-item>
@@ -98,6 +142,52 @@
         <el-descriptions-item label="学校">{{ formCache.school }}</el-descriptions-item>
         <el-descriptions-item label="联系地址">{{ formCache.address }}</el-descriptions-item>
       </el-descriptions>
+      <div v-if="activeAttend.msg">
+        <h4><i class="el-icon-warning" style="color: #F56C6C" />上次驳回信息:</h4>
+        <el-input
+          v-model="activeAttend.msg"
+          type="textarea"
+          :rows="5"
+          readonly
+          placeholder="请输入内容"
+        />
+      </div>
+    </el-dialog>
+    <el-dialog :visible.sync="dialogRatingVisible" :title="'竞赛名称：' + activeAttend.competition_title">
+      <el-descriptions title="报名信息">
+        <el-descriptions-item label="用户名">{{ formCache.nickname }}</el-descriptions-item>
+        <el-descriptions-item label="姓名">{{ formCache.name }}</el-descriptions-item>
+        <el-descriptions-item label="手机号">{{ formCache.phone }}</el-descriptions-item>
+        <el-descriptions-item label="邮箱">{{ formCache.email }}</el-descriptions-item>
+        <el-descriptions-item label="学历">{{ formCache.xueli }}</el-descriptions-item>
+        <el-descriptions-item label="学校">{{ formCache.school }}</el-descriptions-item>
+        <el-descriptions-item label="联系地址">{{ formCache.address }}</el-descriptions-item>
+      </el-descriptions>
+      <div>
+        <h3><i class="el-icon-s-cooperation el-icon--left" />作品：{{ activeAttend.works ? activeAttend.works : '未上传' }}
+        </h3>
+        <h3><i class="el-icon-s-check el-icon--left" />评级：
+          <el-select v-model="activeAttend.score" placeholder="请对作品评级">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </h3>
+        <h3><i class="el-icon-s-comment el-icon--left" style="" />点评：</h3>
+        <el-input
+          v-model="activeAttend.comments"
+          type="textarea"
+          :rows="5"
+          placeholder="请输入内容"
+        />
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogRatingVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleRatingSave">确定</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -109,6 +199,19 @@ export default {
   name: 'Attend',
   data() {
     return {
+      options: [{
+        value: '一等奖',
+        label: '一等奖'
+      }, {
+        value: '二等奖',
+        label: '二等奖'
+      }, {
+        value: '三等奖',
+        label: '三等奖'
+      }, {
+        value: '未获奖',
+        label: '未获奖'
+      }],
       formCache: {
         competition: '',
         uname: '',
@@ -124,6 +227,7 @@ export default {
       isCreate: true, // 是否是新建
       formLabelWidth: '120px',
       dialogFormVisible: false,
+      dialogRatingVisible: false,
       search: {
         nickname: '',
         competition_title: ''
@@ -132,6 +236,12 @@ export default {
     }
   },
   computed: {
+    BASE_API() {
+      return process.env.VUE_APP_BASE_API
+    },
+    RESOURCE_API() {
+      return process.env.VUE_APP_RESOURCE_API
+    },
     filterList() {
       return this.list.filter(ele => {
         return ele.competition_title.trim().toLowerCase().includes(this.search.competition_title.trim().toLowerCase()) && ele.nickname.trim().toLowerCase().includes(this.search.nickname.trim().toLowerCase())
@@ -142,6 +252,23 @@ export default {
     this.getList()
   },
   methods: {
+    scoreMap(score) {
+      const temp = {}
+      switch (score) {
+        case '一等奖': { temp.type = 'danger'; break }
+        case '二等奖': { temp.type = 'warning'; break }
+        case '三等奖': { temp.type = 'primary'; break }
+        case '未获奖': { temp.type = 'info'; break }
+      }
+      return temp
+    },
+    rating(row) {
+      this.activeAttend = Object.assign({}, row)
+      this.dialogRatingVisible = true
+    },
+    handleRatingSave() {
+      this.update(this.activeAttend)
+    },
     handleAudit(obj) {
       this.dialogFormVisible = true
       this.activeAttend = obj
@@ -153,7 +280,24 @@ export default {
     },
     handleRefuse() {
       this.activeAttend.status = 'refuse'
-      this.update(this.activeAttend)
+      this.$prompt('报名者报名页面将显示驳回信息.', '编辑驳回信息', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputType: 'textarea'
+      }).then(({ value }) => {
+        this.activeAttend.msg = value
+        this.update(this.activeAttend).then(_ => {
+          this.$message({
+            type: 'warning',
+            message: '已驳回用户的报名信息'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        })
+      })
     },
     showTagStatusName(type) {
       let temp = ''
@@ -206,11 +350,12 @@ export default {
       this.dialogFormVisible = false
     },
     update(data) {
-      updateAttend(data).then(res => {
+      return updateAttend(data).then(res => {
         console.log(res)
         this.loading = false
         this.$message.success('保存成功.')
         this.dialogFormVisible = false
+        this.dialogRatingVisible = false
         this.getList()
       }).catch(e => {
         this.loading = false
@@ -281,15 +426,21 @@ export default {
 </script>
 
 <style scoped>
-.search-container{
+.score-btn:hover {
+  cursor: pointer;
+}
+
+.search-container {
   display: flex;
   align-items: center;
   font-size: 14px;
   color: #606266;
 }
-.search-input{
+
+.search-input {
   margin-right: 10px;
 }
+
 /deep/ .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;

@@ -198,6 +198,8 @@
                                         <th scope="col">报名时间</th>
                                         <th scope="col">比赛状态</th>
                                         <th scope="col">审核状态</th>
+                                        <th scope="col">作品提交</th>
+                                        <th scope="col">获奖情况</th>
                                         <th scope="col">操作</th>
                                     </tr>
                                     </thead>
@@ -228,8 +230,15 @@
                                         {elseif $v.status == 'commit'/}
                                         <span class="badge bg-primary ">审核中</span>
                                         {elseif $v.status == 'refuse'/}
-                                        <span class="badge bg-danger">报名失败</span>
+                                        <span class="badge bg-danger">报名驳回</span>
+                                        <a class="link-primary" style="cursor: pointer" tabindex="0" data-bs-toggle="popover" title="驳回信息" data-bs-content="{$v.msg?$v.msg:'No data.'}">详情</a>
                                         {/if}
+                                        </td>
+                                        <td>
+                                            <a class="link-primary" style="cursor: pointer" tabindex="0" data-bs-toggle="popover" title="参赛作品" data-bs-content="{$v.works?$v.works:'未上传.'}">{$v.works?'已上传':'未上传'}</a>
+                                        </td>
+                                        <td>
+                                            <a class="link-primary" style="cursor: pointer" tabindex="0" data-bs-toggle="popover" title="作品点评"  data-bs-content="{$v.comments?$v.comments:'未点评.'}">{$v.score?$v.score:'未评奖'}</a>
                                         </td>
                                         <td class="d-flex">
                                             <a href="/stage/detail?id={$v.competition}">竞赛详情</a>

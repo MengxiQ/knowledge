@@ -48,7 +48,12 @@
         prop="avatar"
       >
         <template slot-scope="scope">
-          <img v-if="scope.row.avatar" :src="RESOURCE_API + scope.row.avatar" class="avatar">
+          <el-image
+            class="avatar"
+            style="width: 100px; height: 100px"
+            :src="RESOURCE_API + scope.row.avatar"
+            :preview-src-list="[RESOURCE_API + scope.row.avatar]"
+            fit="fill"></el-image>
           <!--          <img v-if="scope.row.avatar" :src="scope.row.avatar" class="avatar">-->
         </template>
       </el-table-column>

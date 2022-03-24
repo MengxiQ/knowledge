@@ -1,5 +1,5 @@
 <?php
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace app\controller;
 
@@ -23,22 +23,33 @@ class Attend
     /**
      * 保存新建的资源
      *
-     * @param  \think\Request  $request
+     * @param \think\Request $request
      * @return \think\Response
      */
     public function save(Request $request)
     {
+
         $data = $request->post();
-        $user = new AttendModel;
-        $data['status'] = 'commit';
-        $user->save($data);
-        return json(['code' => 1, 'message' => ' 提交成功']);
+        $id = $data['id'];
+        if ($id) {
+//            更新
+            $attend = AttendModel::where('id',$id)->find();
+            $attend->form = $data['form'];
+            $attend->status ='commit';
+            $attend->save();
+            return json(['code' => 1, 'message' => '更新报名成功']);
+        } else {
+            $user = new AttendModel;
+            $data['status'] = 'commit';
+            $user->save($data);
+            return json(['code' => 1, 'message' => ' 新建报名成功']);
+        }
     }
 
     /**
      * 显示指定的资源
      *
-     * @param  int  $id
+     * @param int $id
      * @return \think\Response
      */
     public function read($id)
@@ -49,8 +60,8 @@ class Attend
     /**
      * 保存更新的资源
      *
-     * @param  \think\Request  $request
-     * @param  int  $id
+     * @param \think\Request $request
+     * @param int $id
      * @return \think\Response
      */
     public function update(Request $request, $id)
@@ -63,7 +74,7 @@ class Attend
     /**
      * 删除指定资源
      *
-     * @param  int  $id
+     * @param int $id
      * @return \think\Response
      */
     public function delete($id)

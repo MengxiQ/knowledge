@@ -117,6 +117,14 @@
         </template>
       </el-table-column>
       <el-table-column
+        label="公告设置"
+        prop="awards"
+      >
+        <template slot-scope="scope">
+          <el-button size="mini" @click.native="showArticle(scope.row.announcement)">查看</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column
         label="状态"
         prop="status"
       >
@@ -128,11 +136,10 @@
         align="right"
       >
         <template slot="header" slot-scope="scope">
-          搜索
           <el-input
             v-model="search"
             size="mini"
-            placeholder="输入关键字搜索[用户名]"
+            placeholder="搜索标题"
           />
         </template>
         <template slot-scope="scope">
@@ -169,7 +176,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="封面" :label-width="formLabelWidth" prop="title">
-<!--          :before-upload="beforeAvatarUpload"-->
+          <!--          :before-upload="beforeAvatarUpload"-->
           <el-upload
             class="avatar-uploader"
             :action="BASE_API + 'competitions/upload_cover'"
@@ -234,14 +241,21 @@
           <editor :content.sync="form.awards" />
           <!--          <el-input v-model="form.awards" type="textarea" autocomplete="off"/>-->
         </el-form-item>
-        <el-form-item label="项目状态" :label-width="formLabelWidth" prop="status">
-          <el-select v-model="form.status" placeholder="请选择">
-            <el-option :key="0" label="预告" value="preview" />
-            <el-option :key="1" label="报名中" value="register" />
-            <el-option :key="2" label="进行中" value="begin" />
-            <el-option :key="3" label="已结束" value="end" />
-          </el-select>
+        <el-form-item label="奖项设置" :label-width="formLabelWidth" prop="announcement">
+          <editor :content.sync="form.announcement" />
         </el-form-item>
+<!--        <el-form-item label="发布状态" :label-width="formLabelWidth" prop="status">-->
+<!--&lt;!&ndash;          <el-select v-model="form.status" placeholder="请选择">&ndash;&gt;-->
+<!--&lt;!&ndash;            <el-option :key="0" label="预告" value="preview" />&ndash;&gt;-->
+<!--&lt;!&ndash;            <el-option :key="1" label="报名中" value="register" />&ndash;&gt;-->
+<!--&lt;!&ndash;            <el-option :key="2" label="进行中" value="begin" />&ndash;&gt;-->
+<!--&lt;!&ndash;            <el-option :key="3" label="已结束" value="end" />&ndash;&gt;-->
+<!--&lt;!&ndash;          </el-select>&ndash;&gt;-->
+<!--          <el-select v-model="form.status" placeholder="请选择">-->
+<!--            <el-option :key="0" label="published" value="published" />-->
+<!--            <el-option :key="1" label="draft" value="draft" />-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -287,7 +301,7 @@ export default {
         status: '',
         title: '',
         type: null,
-        cover: null,
+        cover: null
       },
       form: {},
       search: '',
@@ -349,15 +363,19 @@ export default {
     showTagStatusName(type) {
       let temp = ''
       switch (type) {
-        case 'register': {
+        case 'registerStart': {
           temp = '报名中'
           break
         }
-        case 'end': {
+        case 'registerEnd': {
+          temp = '报名结束'
+          break
+        }
+        case 'ended': {
           temp = '已结束'
           break
         }
-        case 'begin': {
+        case 'started': {
           temp = '进行中'
           break
         }
@@ -365,23 +383,29 @@ export default {
           temp = '预告'
           break
         }
+        default: {
+          temp = 'null'
+        }
       }
       return temp
     },
     showTagType(type) {
       let temp = ''
       switch (type) {
-        case 'register': {
+        case 'started': {
           temp = 'success'
           break
         }
-        case 'end': {
+        case 'ended': {
           temp = 'danger'
           break
         }
         case 'preview': {
           temp = 'info'
           break
+        }
+        default: {
+          temp = ''
         }
       }
       return temp

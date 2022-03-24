@@ -131,9 +131,9 @@ class Stage extends BaseController
 
     public function detail(){
         $uid = Cookie::get('uid');
+        $param = Request::param();
+        $id = $param['id'];
         if ($uid) {
-            $param = Request::param();
-            $id = $param['id'];
             $competition = CompetitionsModel::where('id',$id)->find();
             //报名人数,报名成功了才算
             $statistics = AttendModel::where('competition',$id)->where('status','pass')->count();
@@ -163,13 +163,14 @@ class Stage extends BaseController
                 $msg['status'] = 'preview';
             }
 
-//            print_r($msg);
-
             View::assign('competition',$competition);
             View::assign('attend',$attend);
             View::assign('msg',$msg);
             return View::fetch();
         } else {
+
+            $redirect = '?redirect=/stage/detail?id='.$id;
+            View::assign('redirect',$redirect);
             return View::fetch('../view/stage/login.html');
         }
     }
