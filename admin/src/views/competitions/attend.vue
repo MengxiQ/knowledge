@@ -264,6 +264,7 @@ export default {
     },
     rating(row) {
       this.activeAttend = Object.assign({}, row)
+      this.formCache = JSON.parse(row.form)
       this.dialogRatingVisible = true
     },
     handleRatingSave() {

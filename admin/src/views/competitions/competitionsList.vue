@@ -118,7 +118,7 @@
       </el-table-column>
       <el-table-column
         label="公告设置"
-        prop="awards"
+        prop="announcement"
       >
         <template slot-scope="scope">
           <el-button size="mini" @click.native="showArticle(scope.row.announcement)">查看</el-button>
@@ -229,33 +229,40 @@
             end-placeholder="结束日期"
           />
         </el-form-item>
-        <el-form-item label="竞赛介绍" :label-width="formLabelWidth" prop="motto">
-          <editor :content.sync="form.introduce" />
-          <!--          <el-input v-model="form.introduce" type="textarea" autocomplete="off"/>-->
-        </el-form-item>
-        <el-form-item label="竞赛规则" :label-width="formLabelWidth" prop="rules">
-          <editor :content.sync="form.rules" />
-          <!--          <el-input v-model="form.rules" type="textarea" autocomplete="off"/>-->
-        </el-form-item>
-        <el-form-item label="奖项设置" :label-width="formLabelWidth" prop="awards">
-          <editor :content.sync="form.awards" />
-          <!--          <el-input v-model="form.awards" type="textarea" autocomplete="off"/>-->
-        </el-form-item>
-        <el-form-item label="奖项设置" :label-width="formLabelWidth" prop="announcement">
-          <editor :content.sync="form.announcement" />
-        </el-form-item>
-<!--        <el-form-item label="发布状态" :label-width="formLabelWidth" prop="status">-->
-<!--&lt;!&ndash;          <el-select v-model="form.status" placeholder="请选择">&ndash;&gt;-->
-<!--&lt;!&ndash;            <el-option :key="0" label="预告" value="preview" />&ndash;&gt;-->
-<!--&lt;!&ndash;            <el-option :key="1" label="报名中" value="register" />&ndash;&gt;-->
-<!--&lt;!&ndash;            <el-option :key="2" label="进行中" value="begin" />&ndash;&gt;-->
-<!--&lt;!&ndash;            <el-option :key="3" label="已结束" value="end" />&ndash;&gt;-->
-<!--&lt;!&ndash;          </el-select>&ndash;&gt;-->
-<!--          <el-select v-model="form.status" placeholder="请选择">-->
-<!--            <el-option :key="0" label="published" value="published" />-->
-<!--            <el-option :key="1" label="draft" value="draft" />-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
+        <el-collapse>
+          <el-collapse-item name="introduce">
+            <template slot="title">
+              <label for="introduce" class="el-form-item__label" style="width: 120px;">竞赛介绍</label>
+            </template>
+            <el-form-item label="" :label-width="formLabelWidth" prop="introduce">
+              <editor :content.sync="form.introduce" />
+            </el-form-item>
+          </el-collapse-item>
+          <el-collapse-item name="rules">
+            <template slot="title">
+              <label for="rules" class="el-form-item__label" style="width: 120px;">竞赛规则</label>
+            </template>
+            <el-form-item label="" :label-width="formLabelWidth" prop="rules">
+              <editor :content.sync="form.rules" />
+            </el-form-item>
+          </el-collapse-item>
+          <el-collapse-item name="awards">
+            <template slot="title">
+              <label for="awards" class="el-form-item__label" style="width: 120px;">奖项设置</label>
+            </template>
+            <el-form-item label="" :label-width="formLabelWidth" prop="awards">
+              <editor :content.sync="form.awards" />
+            </el-form-item>
+          </el-collapse-item>
+          <el-collapse-item name="announcement">
+            <template slot="title">
+              <label for="announcement" class="el-form-item__label" style="width: 120px;">公告设置</label>
+            </template>
+            <el-form-item label="" :label-width="formLabelWidth" prop="announcement">
+              <editor :content.sync="form.announcement" />
+            </el-form-item>
+          </el-collapse-item>
+        </el-collapse>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
