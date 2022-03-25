@@ -30,7 +30,8 @@ export default {
             {
               title: '标题',
               sub: '副标题',
-              img: ''
+              img: '',
+              link: '#'
             }
           ],
           recommend: []

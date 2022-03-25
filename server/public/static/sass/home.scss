@@ -13,11 +13,11 @@
   .my-card-text {
     text-align: justify; text-justify: inter-ideograph; text-indent: 2em;
     display: block;
-    height: 70px;
+    height: 50px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
   .my-card-title{
