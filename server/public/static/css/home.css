@@ -6,6 +6,7 @@
 .home .card-img {
   height: 180px;
   background-color: pink;
+  display: block;
 }
 .home .my-card-text {
   text-align: justify;
