@@ -26,7 +26,7 @@ module.exports = {
    */
   publicPath: process.env.NODE_ENV === 'production' ? '/admin/' : '/',
   // publicPath: '/',
-  outputDir: 'dist',
+  outputDir: '../server/public/admin',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
