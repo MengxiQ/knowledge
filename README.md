@@ -1,22 +1,26 @@
 项目核心服务
 ===============
 
-> 运行环境要求PHP7.2+，兼容PHP8.1
+> 运行环境要求
+1. node + vue cli
+2. PHP7.2+，兼容PHP8.1;composer + ThinkPHP 6.0
+### 安装依赖&运行
 ~~~
+cd admin
+npm install
+npm run build:prod 
+# 将会build到/server/public/admin 
+~~~
+~~~
+# 切换到server目录
+cd ..
 cd server
-~~~
-
-### 安装依赖
-~~~
 composer update
-~~~
-
-
-### 运行
-~~~
 php think run -p 8090
-
-http://localhost:8090 # 浏览器打开
+~~~
+### 浏览器打开
+~~~
+http://localhost:8090 
 ~~~
 
 ### 路由
